@@ -45,11 +45,10 @@
          </font>
       </Label>
       <TextField layoutX="20.0" layoutY="126.0" prefHeight="25.0" prefWidth="109.0" promptText="Supplier ID" />
-      <TextField layoutX="622.0" layoutY="298.0" prefHeight="25.0" prefWidth="109.0" />
       <TextField layoutX="20.0" layoutY="168.0" prefHeight="35.0" prefWidth="219.0" promptText="Supplier Name" />
-      <TextField layoutX="404.0" layoutY="114.0" prefHeight="31.0" prefWidth="252.0" />
-      <TextField layoutX="481.0" layoutY="354.0" prefHeight="25.0" prefWidth="109.0" />
-      <TextField layoutX="481.0" layoutY="310.0" prefHeight="25.0" prefWidth="109.0" />
+      <TextField layoutX="383.0" layoutY="114.0" prefHeight="31.0" prefWidth="273.0" promptText="Search By Name" />
+      <TextField layoutX="595.0" layoutY="241.0" prefHeight="35.0" prefWidth="235.0" />
+      <TextField layoutX="484.0" layoutY="211.0" prefHeight="25.0" prefWidth="109.0" />
       <TextArea layoutX="20.0" layoutY="218.0" prefHeight="79.0" prefWidth="219.0" promptText="Supplier Address" />
       <TextField layoutX="20.0" layoutY="318.0" prefHeight="35.0" prefWidth="219.0" promptText="Supplier Contact No" />
       <JFXButton layoutX="239.0" layoutY="369.0" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Add Supplier" textFill="#ddc4c4">
@@ -62,7 +61,44 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="667.0" layoutY="114.0" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #932F67;" textFill="#ddc4c4">
+      <JFXButton layoutX="667.0" layoutY="114.0" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #932F67;" text="Search" textFill="#ddc4c4">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="376.0" layoutY="210.0" prefHeight="27.0" prefWidth="121.0" text="Supplier ID :- " textFill="#ebdbdb">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="402.0" layoutY="258.0" prefHeight="27.0" prefWidth="142.0" text="Supplier Name :- " textFill="#ebdbdb">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="401.0" layoutY="293.0" prefHeight="27.0" prefWidth="198.0" text="Supplier Addresses:- " textFill="#ebdbdb">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="595.0" layoutY="286.0" prefHeight="35.0" prefWidth="235.0" />
+      <Label layoutX="403.0" layoutY="328.0" prefHeight="27.0" prefWidth="190.0" text="Supplier Contact No :-" textFill="#ebdbdb">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="595.0" layoutY="330.0" prefHeight="35.0" prefWidth="235.0" />
+      <JFXButton layoutX="528.0" layoutY="375.0" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Clear" textFill="#ddc4c4">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="646.0" layoutY="375.0" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Update" textFill="#ddc4c4">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="760.0" layoutY="375.0" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Delete" textFill="#ddc4c4">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
