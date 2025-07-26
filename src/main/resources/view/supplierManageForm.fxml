@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="732.0" prefWidth="873.0" style="-fx-background-color: #F4EBD0;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SupplierMangeFormController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="65.0" layoutX="-4.0" stroke="BLACK" strokeType="INSIDE" width="877.0" />
+      <Label alignment="CENTER" layoutX="176.0" layoutY="-1.0" prefHeight="72.0" prefWidth="540.0" text="Supplier Management" textFill="WHITE">
+         <font>
+            <Font name="Dubai Bold" size="45.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="349.0" layoutX="3.0" layoutY="70.0" stroke="BLACK" strokeType="INSIDE" width="370.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="87.0" layoutX="375.0" layoutY="70.0" stroke="BLACK" strokeType="INSIDE" width="494.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="258.0" layoutX="375.0" layoutY="161.0" stroke="BLACK" strokeType="INSIDE" width="494.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="299.0" layoutX="4.0" layoutY="425.0" stroke="BLACK" strokeType="INSIDE" width="863.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="35.0" layoutX="38.0" layoutY="73.0" stroke="BLACK" strokeType="INSIDE" width="273.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="35.0" layoutX="458.0" layoutY="73.0" stroke="BLACK" strokeType="INSIDE" width="273.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="35.0" layoutX="224.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" width="380.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="35.0" layoutX="414.0" layoutY="167.0" stroke="BLACK" strokeType="INSIDE" width="380.0" />
+      <Label alignment="CENTER" layoutX="56.0" layoutY="72.0" prefHeight="12.0" prefWidth="241.0" text="Add New Suppliers" textFill="WHITE">
+         <font>
+            <Font name="Dubai Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="474.0" layoutY="71.0" prefHeight="12.0" prefWidth="241.0" text="Search Suppliers" textFill="WHITE">
+         <font>
+            <Font name="Dubai Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="484.0" layoutY="167.0" prefHeight="12.0" prefWidth="241.0" text="Update/Delete Suppliers" textFill="WHITE">
+         <font>
+            <Font name="Dubai Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="294.0" layoutY="435.0" prefHeight="12.0" prefWidth="241.0" text="View Suppliers" textFill="WHITE">
+         <font>
+            <Font name="Dubai Bold" size="20.0" />
+         </font>
+      </Label>
+      <TextField layoutX="20.0" layoutY="126.0" prefHeight="25.0" prefWidth="109.0" promptText="Supplier ID" />
+      <TextField layoutX="622.0" layoutY="298.0" prefHeight="25.0" prefWidth="109.0" />
+      <TextField layoutX="20.0" layoutY="168.0" prefHeight="35.0" prefWidth="219.0" promptText="Supplier Name" />
+      <TextField layoutX="404.0" layoutY="114.0" prefHeight="31.0" prefWidth="252.0" />
+      <TextField layoutX="481.0" layoutY="354.0" prefHeight="25.0" prefWidth="109.0" />
+      <TextField layoutX="481.0" layoutY="310.0" prefHeight="25.0" prefWidth="109.0" />
+      <TextArea layoutX="20.0" layoutY="218.0" prefHeight="79.0" prefWidth="219.0" promptText="Supplier Address" />
+      <TextField layoutX="20.0" layoutY="318.0" prefHeight="35.0" prefWidth="219.0" promptText="Supplier Contact No" />
+      <JFXButton layoutX="239.0" layoutY="369.0" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Add Supplier" textFill="#ddc4c4">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="744.0" layoutY="676.0" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Refresh" textFill="#ddc4c4">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="667.0" layoutY="114.0" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #932F67;" textFill="#ddc4c4">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
