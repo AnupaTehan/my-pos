@@ -98,10 +98,10 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="760.0" layoutY="375.0" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Delete" textFill="#ddc4c4">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </JFXButton>
+<!--      <JFXButton layoutX="760.0" layoutY="375.0" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Delete" textFill="#ddc4c4">-->
+<!--         <font>-->
+<!--            <Font name="System Bold" size="13.0" />-->
+<!--         </font>-->
+<!--      </JFXButton>-->
    </children>
 </AnchorPane>
