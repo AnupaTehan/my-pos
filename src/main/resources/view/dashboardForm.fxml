@@ -24,17 +24,17 @@
          </effect>
       </Rectangle>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="447.0" layoutX="36.0" layoutY="160.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="660.0" />
-      <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="69.0" layoutY="235.0" prefHeight="48.0" prefWidth="411.0" style="-fx-background-color: #ffffff;" text="Supplier Management" textFill="#0587a4">
+      <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="69.0" layoutY="235.0" onAction="#btnSupplierManagementOnAction" prefHeight="48.0" prefWidth="411.0" style="-fx-background-color: #ffffff;" text="Supplier Management" textFill="#0587a4">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="69.0" layoutY="445.0" prefHeight="48.0" prefWidth="411.0" style="-fx-background-color: #ffffff;" text="Purchase Order" textFill="#0587a4">
+      <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="69.0" layoutY="445.0" onAction="#btnPurchaseOrderOnAction" prefHeight="48.0" prefWidth="411.0" style="-fx-background-color: #ffffff;" text="Purchase Order" textFill="#0587a4">
          <font>
             <Font size="24.0" />
          </font>
       </JFXButton>
-      <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="69.0" layoutY="342.0" prefHeight="48.0" prefWidth="411.0" style="-fx-background-color: #ffffff;" text="Item Management" textFill="#0587a4">
+      <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="69.0" layoutY="342.0" onAction="#btnItemManagementOnAction" prefHeight="48.0" prefWidth="411.0" style="-fx-background-color: #ffffff;" text="Item Management" textFill="#0587a4">
          <font>
             <Font size="24.0" />
          </font>
