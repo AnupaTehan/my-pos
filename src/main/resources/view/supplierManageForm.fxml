@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -88,7 +90,7 @@
          </font>
       </Label>
       <TextField fx:id="SupplierContactNo" layoutX="595.0" layoutY="330.0" prefHeight="35.0" prefWidth="235.0" />
-      <JFXButton layoutX="528.0" layoutY="375.0" onAction="#btnClearonAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Clear" textFill="#ddc4c4">
+      <JFXButton layoutX="528.0" layoutY="375.0" onAction="#btnClearOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Clear" textFill="#ddc4c4">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -103,5 +105,10 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
+      <ImageView fitHeight="35.0" fitWidth="39.0" layoutX="21.0" layoutY="15.0" onMouseClicked="#homeMouseOnClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/home.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import single.DashBoardForm;
 
 public class SupplierMangeFormController {
 
@@ -40,7 +42,7 @@ public class SupplierMangeFormController {
     }
 
     @FXML
-    void btnClearonAction(ActionEvent event) {
+    void btnClearOnAction(ActionEvent event) {
 
     }
 
@@ -64,4 +66,8 @@ public class SupplierMangeFormController {
 
     }
 
+    public void homeMouseOnClick(MouseEvent mouseEvent) {
+        DashBoardForm dashBoardForm = DashBoardForm.getInstance();
+        dashBoardForm.show();
+    }
 }

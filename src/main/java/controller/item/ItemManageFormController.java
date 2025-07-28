@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import single.DashBoardForm;
 
 public class ItemManageFormController {
 
@@ -64,4 +66,8 @@ public class ItemManageFormController {
 
     }
 
+    public void homeMouseOnClick(MouseEvent mouseEvent) {
+        DashBoardForm dashBoardForm = DashBoardForm.getInstance();
+        dashBoardForm.show();
+    }
 }
