@@ -2,6 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -58,7 +60,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="744.0" layoutY="676.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Refresh" textFill="#ddc4c4">
+      <JFXButton layoutX="750.0" layoutY="685.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Refresh" textFill="#ddc4c4">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -110,5 +112,13 @@
             <Image url="@../img/home.png" />
          </image>
       </ImageView>
+      <TableView fx:id="tblSupplier" layoutX="29.0" layoutY="473.0" prefHeight="200.0" prefWidth="828.0" styleClass="dashboard-colour2" stylesheets="@../css/Table.css">
+        <columns>
+          <TableColumn fx:id="colSupplierId" prefWidth="162.0" text="Supplier ID" />
+          <TableColumn fx:id="colSupplierName" prefWidth="206.0" text="Supplier Name" />
+            <TableColumn fx:id="colSupplierAddress" prefWidth="247.0" text="Supplier Address" />
+            <TableColumn fx:id="colSupplierContactNo" prefWidth="212.0" text="Supplier Contact No" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

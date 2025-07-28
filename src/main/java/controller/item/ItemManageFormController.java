@@ -3,6 +3,8 @@ package controller.item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import single.DashBoardForm;
@@ -11,6 +13,18 @@ public class ItemManageFormController {
 
     @FXML
     private ComboBox<?> cmdItemType;
+
+    @FXML
+    private TableColumn colItemId;
+
+    @FXML
+    private TableColumn  colItemName;
+
+    @FXML
+    private TableColumn colItemType;
+
+    @FXML
+    private TableColumn colItemUnitPrice;
 
     @FXML
     private TextField itemId;
@@ -23,6 +37,9 @@ public class ItemManageFormController {
 
     @FXML
     private TextField itemUnitPrice;
+
+    @FXML
+    private TableView tblItem;
 
     @FXML
     private TextField txtItemId;
@@ -66,8 +83,10 @@ public class ItemManageFormController {
 
     }
 
-    public void homeMouseOnClick(MouseEvent mouseEvent) {
+    @FXML
+    void homeMouseOnClick(MouseEvent event) {
         DashBoardForm dashBoardForm = DashBoardForm.getInstance();
         dashBoardForm.show();
     }
+
 }

@@ -2,6 +2,8 @@ package controller.supplier;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -16,10 +18,25 @@ public class SupplierMangeFormController {
     private TextField SupplierContactNo;
 
     @FXML
+    private TableColumn  colSupplierAddress;
+
+    @FXML
+    private TableColumn  colSupplierContactNo;
+
+    @FXML
+    private TableColumn  colSupplierId;
+
+    @FXML
+    private TableColumn  colSupplierName;
+
+    @FXML
     private TextField supplierId;
 
     @FXML
     private TextField supplierName;
+
+    @FXML
+    private TableView tblSupplier;
 
     @FXML
     private TextField txtSearchSupplierByName;
@@ -66,8 +83,10 @@ public class SupplierMangeFormController {
 
     }
 
-    public void homeMouseOnClick(MouseEvent mouseEvent) {
+    @FXML
+    void homeMouseOnClick(MouseEvent event) {
         DashBoardForm dashBoardForm = DashBoardForm.getInstance();
         dashBoardForm.show();
     }
+
 }

@@ -3,6 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -57,7 +59,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="754.0" layoutY="686.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Refresh" textFill="#ddc4c4">
+      <JFXButton layoutX="754.0" layoutY="698.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" styleClass="dashboard-colour2" stylesheets="@../css/Table.css" text="Refresh" textFill="#ddc4c4">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -110,5 +112,13 @@
             <Image url="@../img/home.png" />
          </image>
       </ImageView>
+      <TableView fx:id="tblItem" layoutX="17.0" layoutY="489.0" prefHeight="200.0" prefWidth="847.0" styleClass="dashboard-colour2" stylesheets="@../css/Table.css">
+        <columns>
+          <TableColumn fx:id="colItemId" prefWidth="190.0" text="Item ID" />
+          <TableColumn fx:id="colItemName" prefWidth="177.0" text="Item Name " />
+            <TableColumn fx:id="colItemType" prefWidth="195.0" text="Item Type" />
+            <TableColumn fx:id="colItemUnitPrice" prefWidth="281.0" text="Item Unite Price" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
