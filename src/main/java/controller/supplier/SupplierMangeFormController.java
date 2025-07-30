@@ -2,6 +2,7 @@ package controller.supplier;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -9,7 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import single.DashBoardForm;
 
-public class SupplierMangeFormController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SupplierMangeFormController implements Initializable {
 
     @FXML
     private TextField SupplierAddress;
@@ -53,6 +57,8 @@ public class SupplierMangeFormController {
     @FXML
     private TextField txtSupplierName;
 
+    SupplierService supplierService = SupplierController.getInstance();
+
     @FXML
     void btnAddSupplierOnAction(ActionEvent event) {
 
@@ -89,4 +95,19 @@ public class SupplierMangeFormController {
         dashBoardForm.show();
     }
 
+   public void nextIdGenerated(){
+        String lastId = supplierService.getNextSupplierId();
+
+        String numericPart = lastId.substring(1);
+
+        int nextId  = Integer.parseInt((numericPart) + 1);
+        String newId = String.format("S%03d" , nextId);
+
+        txtSupplierId.setText(newId);
+   }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        nextIdGenerated();
+    }
 }

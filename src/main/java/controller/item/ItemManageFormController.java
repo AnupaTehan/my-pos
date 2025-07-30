@@ -1,7 +1,10 @@
 package controller.item;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -9,10 +12,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import single.DashBoardForm;
 
-public class ItemManageFormController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ItemManageFormController implements Initializable {
 
     @FXML
-    private ComboBox<?> cmdItemType;
+    private ComboBox  cmdItemType;
 
     @FXML
     private TableColumn colItemId;
@@ -89,4 +95,11 @@ public class ItemManageFormController {
         dashBoardForm.show();
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<String> itemTypeList= FXCollections.observableArrayList();
+        itemTypeList.add("Single");
+        itemTypeList.add("Double");
+        cmdItemType.setItems(itemTypeList);
+    }
 }
