@@ -9,9 +9,9 @@ public interface SupplierService {
 
     boolean updateSupplier(Supplier supplier);
 
-    boolean deleteSupplier(String SupplierId);
+    boolean deleteSupplier(String supplierId);
 
-    Supplier SearchSupplier(String SupplierId);
+    Supplier SearchSupplier(String supplierId);
 
     ObservableList<Supplier> getAll();
 

@@ -20,7 +20,7 @@ public class SupplierManageForm {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/supplierManageForm.fxml"));
             Parent root = loader.load();
             stage.setScene(new Scene(root));
-            stage.setTitle("Item Manager Form");
+            stage.setTitle("Supplier Manager Form");
         }catch (IOException e){
             throw new RuntimeException(e);
         }

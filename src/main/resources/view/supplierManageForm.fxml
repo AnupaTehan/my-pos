@@ -92,7 +92,7 @@
             </Rectangle>
             <TextField fx:id="txtSupplierName" layoutX="23.0" layoutY="190.0" prefHeight="35.0" prefWidth="330.0" promptText="Supplier Name" />
             <TextField fx:id="txtSearchSupplierByName" layoutX="410.0" layoutY="157.0" prefHeight="27.0" prefWidth="322.0" promptText="Search By Name" />
-            <TextField fx:id="supplierName" layoutX="555.0" layoutY="246.0" prefHeight="26.0" prefWidth="302.0" />
+            <TextField fx:id="SupplierName" layoutX="555.0" layoutY="246.0" prefHeight="26.0" prefWidth="302.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfcfcf" height="35.0" layoutX="242.0" layoutY="372.0" stroke="#cfcfcf" strokeType="INSIDE" width="102.0">
                <effect>
                   <Shadow>
@@ -102,7 +102,7 @@
                   </Shadow>
                </effect>
             </Rectangle>
-            <TextField fx:id="supplierId" layoutX="554.0" layoutY="209.0" prefHeight="26.0" prefWidth="302.0" />
+            <TextField fx:id="SupplierId" layoutX="554.0" layoutY="209.0" prefHeight="26.0" prefWidth="302.0" />
             <TextArea fx:id="txtSupplierAddress" layoutX="23.0" layoutY="231.0" prefHeight="79.0" prefWidth="330.0" promptText="Supplier Address" />
             <TextField fx:id="txtSupplierContactNo" layoutX="23.0" layoutY="317.0" prefHeight="35.0" prefWidth="330.0" promptText="Supplier Contact No" />
             <JFXButton layoutX="242.0" layoutY="369.0" onAction="#btnAddSupplierOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #ffffff;" text="Add Supplier" textFill="#767474">

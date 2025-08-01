@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 public class Supplier {
 
     private String supplierId;
-    private String SupplierName;
-    private String SupplierAddress;
+    private String supplierName;
+    private String supplierAddress;
     private String contactNo;
+
 
 
 }
