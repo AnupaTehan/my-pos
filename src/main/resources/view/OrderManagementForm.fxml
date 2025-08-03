@@ -13,7 +13,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="740.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.order.OderManageFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="304.0" layoutX="29.0" layoutY="425.0" stroke="#a4a4a4" strokeType="INSIDE" strokeWidth="0.0" width="838.0">
@@ -160,7 +159,7 @@
          </effect>
       </Rectangle>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="36.0" layoutX="71.0" layoutY="433.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="755.0" />
-      <Label alignment="CENTER" layoutX="301.0" layoutY="428.0" prefHeight="26.0" prefWidth="243.0" text="View Cart" textFill="#767474">
+      <Label alignment="CENTER" layoutX="301.0" layoutY="432.0" prefHeight="26.0" prefWidth="243.0" text="View Cart" textFill="#767474">
          <font>
             <Font size="24.0" />
          </font>
