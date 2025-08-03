@@ -116,6 +116,7 @@
                      </color>
                   </Shadow>
                </effect>
+
             </JFXButton>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="37.0" layoutX="696.0" layoutY="454.0" stroke="#fff1f1" strokeType="INSIDE" width="158.0">
                <effect>
