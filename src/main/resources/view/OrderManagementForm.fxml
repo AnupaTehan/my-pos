@@ -7,58 +7,115 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="740.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.order.OderManageFormController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbe5a" height="70.0" layoutX="28.0" layoutY="25.0" stroke="BLACK" strokeType="INSIDE" width="838.0" />
-      <Label alignment="CENTER" layoutX="42.0" layoutY="34.0" prefHeight="36.0" prefWidth="109.0" text="Order ID :" textFill="#e41f1f">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="304.0" layoutX="29.0" layoutY="425.0" stroke="#a4a4a4" strokeType="INSIDE" strokeWidth="0.0" width="838.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="304.0" layoutX="29.0" layoutY="423.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="838.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" layoutX="31.0" layoutY="28.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="838.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" layoutX="33.0" layoutY="25.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="838.0" />
+      <Label alignment="CENTER" layoutX="47.0" layoutY="40.0" prefHeight="36.0" prefWidth="109.0" text="Order ID :" textFill="#767474">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="291.0" layoutY="40.0" prefHeight="36.0" prefWidth="109.0" text="Date :" textFill="#e41f1f">
+      <Label alignment="CENTER" layoutX="298.0" layoutY="41.0" prefHeight="36.0" prefWidth="109.0" text="Date :" textFill="#767474">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="582.0" layoutY="34.0" prefHeight="36.0" prefWidth="109.0" text="Time :" textFill="#e41f1f">
+      <Label alignment="CENTER" layoutX="587.0" layoutY="42.0" prefHeight="36.0" prefWidth="109.0" text="Time :" textFill="#767474">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <JFXTextField layoutX="158.0" layoutY="42.0" />
-      <JFXTextField layoutX="409.0" layoutY="46.0" />
-      <JFXTextField layoutX="701.0" layoutY="46.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbe5a" height="289.0" layoutX="28.0" layoutY="128.0" stroke="BLACK" strokeType="INSIDE" width="838.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbe5a" height="36.0" layoutX="174.0" layoutY="143.0" stroke="BLACK" strokeType="INSIDE" width="488.0" />
-      <Label alignment="CENTER" layoutX="307.0" layoutY="145.0" prefHeight="38.0" prefWidth="253.0" text="Add To Cart">
+      <JFXTextField layoutX="163.0" layoutY="42.0" unFocusColor="#767474" />
+      <JFXTextField layoutX="414.0" layoutY="46.0" unFocusColor="#767474" />
+      <JFXTextField layoutX="706.0" layoutY="46.0" unFocusColor="#767474" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="289.0" layoutX="31.0" layoutY="114.0" stroke="#a4a4a4" strokeType="INSIDE" strokeWidth="0.0" width="838.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="289.0" layoutX="31.0" layoutY="109.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="838.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="36.0" layoutX="72.0" layoutY="132.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="755.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="700.0" layoutY="325.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="135.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="36.0" layoutX="73.0" layoutY="127.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="755.0" />
+      <Label alignment="CENTER" layoutX="303.0" layoutY="126.0" prefHeight="26.0" prefWidth="243.0" text="Add To Cart" textFill="#767474">
          <font>
-            <Font size="26.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <JFXButton layoutX="758.0" layoutY="185.0" prefHeight="38.0" prefWidth="94.0" style="-fx-background-color: #54a0ff;" text="Clear Field" />
-      <JFXButton layoutX="758.0" layoutY="234.0" prefHeight="38.0" prefWidth="94.0" style="-fx-background-color: #54a0ff;" text="Clear Table" />
-      <ComboBox layoutX="130.0" layoutY="194.0" prefWidth="150.0" promptText="Supplier ID" />
-      <ComboBox layoutX="130.0" layoutY="263.0" prefWidth="150.0" promptText="Item Code " />
-      <TextField layoutX="323.0" layoutY="289.0" prefHeight="25.0" prefWidth="269.0" text="Item Name" />
-      <TextField layoutX="325.0" layoutY="321.0" prefHeight="25.0" prefWidth="184.0" text="Unite Type" />
-      <TextField layoutX="326.0" layoutY="354.0" prefHeight="25.0" prefWidth="184.0" text="Unite Price" />
-      <TextField layoutX="326.0" layoutY="385.0" prefHeight="25.0" prefWidth="184.0" text="Stock" />
-      <JFXButton layoutX="717.0" layoutY="362.0" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #54a0ff;" text="Clear Table" />
-      <TextField layoutX="718.0" layoutY="321.0" prefHeight="36.0" prefWidth="143.0" text="Quantity" />
-      <JFXTextField layoutX="342.0" layoutY="207.0" prefHeight="25.0" prefWidth="215.0" text="Supplier  Name" />
-      <JFXTextField layoutX="342.0" layoutY="241.0" prefHeight="25.0" prefWidth="215.0" text="Supplier Contact No" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbe5a" height="309.0" layoutX="11.0" layoutY="423.0" stroke="BLACK" strokeType="INSIDE" width="889.0" />
-      <Label alignment="CENTER" layoutX="291.0" layoutY="426.0" prefHeight="38.0" prefWidth="253.0" text="View Cart">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Label>
-      <TableView layoutX="42.0" layoutY="468.0" prefHeight="200.0" prefWidth="814.0">
+      <JFXButton layoutX="700.0" layoutY="323.0" prefHeight="36.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Clear Field" textFill="#767474" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="545.0" layoutY="325.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="135.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <JFXButton layoutX="545.0" layoutY="322.0" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Clear Table" textFill="#767474" />
+      <ComboBox layoutX="51.0" layoutY="194.0" prefHeight="26.0" prefWidth="243.0" promptText="Supplier ID" />
+      <ComboBox layoutX="324.0" layoutY="193.0" prefHeight="26.0" prefWidth="243.0" promptText="Item Code " />
+      <TextField layoutX="324.0" layoutY="229.0" prefHeight="26.0" prefWidth="243.0" text="Item Name" />
+      <TextField layoutX="324.0" layoutY="267.0" prefHeight="26.0" prefWidth="243.0" text="Unite Type" />
+      <TextField layoutX="594.0" layoutY="194.0" prefHeight="26.0" prefWidth="243.0" text="Unite Price" />
+      <TextField layoutX="594.0" layoutY="267.0" prefHeight="26.0" prefWidth="243.0" text="Stock" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="390.0" layoutY="325.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="135.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <JFXButton layoutX="390.0" layoutY="322.0" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Clear Table" textFill="#767474" />
+      <TextField layoutX="594.0" layoutY="229.0" prefHeight="0.0" prefWidth="243.0" text="Quantity" />
+      <TableView layoutX="56.0" layoutY="485.0" prefHeight="183.0" prefWidth="794.0">
         <columns>
           <TableColumn prefWidth="124.0" text="C1" />
           <TableColumn prefWidth="130.0" text="C2" />
@@ -68,8 +125,44 @@
             <TableColumn prefWidth="165.0" text="C2" />
         </columns>
       </TableView>
-      <JFXButton layoutX="789.0" layoutY="679.0" prefHeight="38.0" prefWidth="94.0" style="-fx-background-color: #54a0ff;" text="Place Order" />
-      <Label alignment="CENTER" layoutX="19.0" layoutY="680.0" prefHeight="36.0" prefWidth="100.0" text="Net Total" />
-      <Label layoutX="108.0" layoutY="690.0" prefHeight="17.0" prefWidth="87.0" text="0000" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="714.0" layoutY="683.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="135.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="56.0" layoutY="683.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="269.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="56.0" layoutY="679.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="269.0" />
+      <JFXButton layoutX="714.0" layoutY="679.0" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Place Order" textFill="#767474" />
+      <Label alignment="CENTER" layoutX="56.0" layoutY="680.0" prefHeight="36.0" prefWidth="100.0" text="Net Total :" textFill="#767474" />
+      <Label layoutX="156.0" layoutY="689.0" prefHeight="17.0" prefWidth="87.0" text="0000" textFill="#767474" />
+      <TextField layoutX="51.0" layoutY="229.0" prefHeight="26.0" prefWidth="243.0" text="Supplier  Name" />
+      <TextField layoutX="51.0" layoutY="267.0" prefHeight="26.0" prefWidth="243.0" text="Supplier Contact No" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="36.0" layoutX="70.0" layoutY="438.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="755.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="36.0" layoutX="71.0" layoutY="433.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="755.0" />
+      <Label alignment="CENTER" layoutX="301.0" layoutY="428.0" prefHeight="26.0" prefWidth="243.0" text="View Cart" textFill="#767474">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
