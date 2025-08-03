@@ -6,9 +6,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -20,99 +22,180 @@
             <Font name="Dubai Bold" size="45.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="349.0" layoutX="2.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="370.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="87.0" layoutX="381.0" layoutY="80.0" stroke="BLACK" strokeType="INSIDE" width="494.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="258.0" layoutX="381.0" layoutY="171.0" stroke="BLACK" strokeType="INSIDE" width="494.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="314.0" layoutX="3.0" layoutY="432.0" stroke="BLACK" strokeType="INSIDE" width="871.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="35.0" layoutX="48.0" layoutY="83.0" stroke="BLACK" strokeType="INSIDE" width="273.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="35.0" layoutX="468.0" layoutY="83.0" stroke="BLACK" strokeType="INSIDE" width="273.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="35.0" layoutX="234.0" layoutY="445.0" stroke="BLACK" strokeType="INSIDE" width="380.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="35.0" layoutX="424.0" layoutY="177.0" stroke="BLACK" strokeType="INSIDE" width="380.0" />
-      <Label alignment="CENTER" layoutX="66.0" layoutY="82.0" prefHeight="12.0" prefWidth="241.0" text="Add New Item" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="281.0" layoutX="17.0" layoutY="141.0" stroke="BLACK" strokeType="INSIDE" width="350.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="281.0" layoutX="16.0" layoutY="137.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="350.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="72.0" layoutY="155.0" stroke="#767474" strokeType="INSIDE" strokeWidth="0.0" width="280.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6421052813529968" green="0.6421052813529968" blue="0.6421052813529968" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="281.0" layoutX="380.0" layoutY="143.0" stroke="BLACK" strokeType="INSIDE" width="484.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="281.0" layoutX="381.0" layoutY="137.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="484.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="288.0" layoutX="20.0" layoutY="436.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="847.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.557894766330719" green="0.547563374042511" blue="0.547563374042511" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="288.0" layoutX="19.0" layoutY="432.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="847.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="75.0" layoutY="150.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="273.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="435.0" layoutY="153.0" stroke="#767474" strokeType="INSIDE" strokeWidth="0.0" width="386.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6421052813529968" green="0.6421052813529968" blue="0.6421052813529968" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="438.0" layoutY="150.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="380.0" />
+      <Label alignment="CENTER" layoutX="80.0" layoutY="149.0" prefHeight="12.0" prefWidth="241.0" text="Add New Item" textFill="#767474">
          <font>
             <Font name="Dubai Bold" size="20.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="484.0" layoutY="81.0" prefHeight="12.0" prefWidth="241.0" text="Search Item" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="507.0" layoutY="150.0" prefHeight="12.0" prefWidth="241.0" text="Update/Delete Item" textFill="#767474">
          <font>
             <Font name="Dubai Bold" size="20.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="494.0" layoutY="177.0" prefHeight="12.0" prefWidth="241.0" text="Update/Delete Item" textFill="WHITE">
-         <font>
-            <Font name="Dubai Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="304.0" layoutY="445.0" prefHeight="12.0" prefWidth="241.0" text="View Items" textFill="WHITE">
-         <font>
-            <Font name="Dubai Bold" size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtItemId" layoutX="30.0" layoutY="136.0" prefHeight="25.0" prefWidth="109.0" promptText="Item ID" />
-      <TextField fx:id="txtItemName" layoutX="30.0" layoutY="181.0" prefHeight="35.0" prefWidth="219.0" promptText="Item Name" />
-      <TextField fx:id="txtItemSearchByName" layoutX="393.0" layoutY="124.0" prefHeight="31.0" prefWidth="273.0" promptText="Search By Name" />
-      <TextField fx:id="itemName" layoutX="557.0" layoutY="251.0" prefHeight="35.0" prefWidth="228.0" />
-      <TextField fx:id="itemId" layoutX="494.0" layoutY="221.0" prefHeight="25.0" prefWidth="109.0" />
-      <TextField fx:id="txtItemUnitPrice" layoutX="30.0" layoutY="305.0" prefHeight="35.0" prefWidth="219.0" promptText="Unite Price" />
-      <JFXButton layoutX="249.0" layoutY="379.0" onAction="#btnAddItemOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Add Item" textFill="#ddc4c4">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </JFXButton>
-      <JFXButton layoutX="754.0" layoutY="698.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" styleClass="dashboard-colour2" stylesheets="@../css/Table.css" text="Refresh" textFill="#ddc4c4">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </JFXButton>
-      <JFXButton layoutX="677.0" layoutY="124.0" onAction="#btnItemSearchByNameOnAction" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #932F67;" text="Search" textFill="#ddc4c4">
+      <TextField fx:id="txtItemId" layoutX="30.0" layoutY="204.0" prefHeight="26.0" prefWidth="322.0" promptText="Item ID" />
+      <TextField fx:id="txtItemName" layoutX="30.0" layoutY="246.0" prefHeight="26.0" prefWidth="322.0" promptText="Item Name" />
+      <TextField fx:id="txtItemSearchByName" layoutX="411.0" layoutY="195.0" prefHeight="26.0" prefWidth="322.0" promptText="Search By Name" />
+      <TextField fx:id="itemName" layoutX="570.0" layoutY="268.0" prefHeight="26.0" prefWidth="274.0" />
+      <TextField fx:id="itemId" layoutX="569.0" layoutY="233.0" prefHeight="26.0" prefWidth="274.0" />
+      <TextField fx:id="txtItemUnitPrice" layoutX="30.0" layoutY="332.0" prefHeight="26.0" prefWidth="322.0" promptText="Unite Price" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="35.0" layoutX="249.0" layoutY="377.0" stroke="BLACK" strokeType="INSIDE" width="102.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.686274528503418" green="0.686274528503418" blue="0.686274528503418" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="740.0" layoutY="451.0" stroke="#fff1f1" strokeType="INSIDE" width="114.0">
+         <effect>
+            <Shadow height="20.42" radius="8.685" width="16.32">
+               <color>
+                  <Color red="0.6947368383407593" green="0.6535672545433044" blue="0.6535672545433044" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <JFXButton layoutX="249.0" layoutY="373.0" onAction="#btnAddItemOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #ffffff;" text="Add Item" textFill="#767474">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <Label layoutX="386.0" layoutY="220.0" prefHeight="27.0" prefWidth="121.0" text="Item ID :- " textFill="#ebdbdb">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="401.0" layoutY="255.0" prefHeight="27.0" prefWidth="142.0" text="Item Name :- " textFill="#ebdbdb">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="399.0" layoutY="300.0" prefHeight="27.0" prefWidth="198.0" text="Item Type" textFill="#ebdbdb">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="itemType" layoutX="558.0" layoutY="295.0" prefHeight="35.0" prefWidth="228.0" />
-      <Label layoutX="397.0" layoutY="341.0" prefHeight="27.0" prefWidth="190.0" text="Item Unite Price :-" textFill="#ebdbdb">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <JFXButton layoutX="538.0" layoutY="385.0" onAction="#btnClearOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Clear" textFill="#ddc4c4">
+      <JFXButton layoutX="740.0" layoutY="448.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: #ffffff;" styleClass="dashboard-colour2" stylesheets="@../css/Table.css" text="Refresh" textFill="#767474">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="656.0" layoutY="385.0" onAction="#btnUpdateOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Update" textFill="#ddc4c4">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="26.0" layoutX="752.0" layoutY="197.0" stroke="BLACK" strokeType="INSIDE" width="90.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.686274528503418" green="0.686274528503418" blue="0.686274528503418" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <JFXButton layoutX="752.0" layoutY="193.0" onAction="#btnItemSearchByNameOnAction" prefHeight="11.0" prefWidth="89.0" style="-fx-background-color: #ffffff;" text="Search" textFill="#767474">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="770.0" layoutY="385.0" onAction="#btnDeleteOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #932F67;" text="Delete" textFill="#ddc4c4">
+      <Label layoutX="412.0" layoutY="232.0" prefHeight="27.0" prefWidth="121.0" text="Item ID :- " textFill="#a4a4a4">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="412.0" layoutY="269.0" prefHeight="27.0" prefWidth="142.0" text="Item Name :- " textFill="#a4a4a4">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="412.0" layoutY="303.0" prefHeight="27.0" prefWidth="198.0" text="Item Type" textFill="#a4a4a4">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="itemType" layoutX="570.0" layoutY="304.0" prefHeight="26.0" prefWidth="274.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="30.0" layoutX="569.0" layoutY="378.0" stroke="BLACK" strokeType="INSIDE" width="82.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.686274528503418" green="0.686274528503418" blue="0.686274528503418" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Label layoutX="412.0" layoutY="341.0" prefHeight="27.0" prefWidth="190.0" text="Item Unite Price :-" textFill="#a4a4a4">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="570.0" layoutY="375.0" onAction="#btnClearOnAction" prefHeight="30.0" prefWidth="81.0" style="-fx-background-color: #ffffff;" text="Clear" textFill="#767474">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <ComboBox fx:id="cmdItemType" layoutX="29.0" layoutY="244.0" prefHeight="35.0" prefWidth="219.0" promptText="Item Type" />
-      <TextField fx:id="itemUnitPrice" layoutX="558.0" layoutY="339.0" prefHeight="35.0" prefWidth="228.0" />
-      <ImageView fitHeight="35.0" fitWidth="39.0" layoutX="20.0" layoutY="22.0" onMouseClicked="#homeMouseOnClick" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../img/home.png" />
-         </image>
-      </ImageView>
-      <TableView fx:id="tblItem" layoutX="17.0" layoutY="489.0" prefHeight="200.0" prefWidth="847.0" styleClass="dashboard-colour2" stylesheets="@../css/Table.css">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="30.0" layoutX="667.0" layoutY="378.0" stroke="BLACK" strokeType="INSIDE" width="82.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.686274528503418" green="0.686274528503418" blue="0.686274528503418" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4a4a4" height="30.0" layoutX="762.0" layoutY="378.0" stroke="BLACK" strokeType="INSIDE" width="82.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.686274528503418" green="0.686274528503418" blue="0.686274528503418" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <JFXButton layoutX="667.0" layoutY="375.0" onAction="#btnUpdateOnAction" prefHeight="30.0" prefWidth="82.0" style="-fx-background-color: #ffffff;" text="Update" textFill="#767474">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="762.0" layoutY="375.0" onAction="#btnDeleteOnAction" prefHeight="30.0" prefWidth="82.0" style="-fx-background-color: #ffffff;" text="Delete" textFill="#767474">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <ComboBox fx:id="cmdItemType" layoutX="29.0" layoutY="287.0" prefHeight="26.0" prefWidth="322.0" promptText="Item Type" />
+      <TextField fx:id="itemUnitPrice" layoutX="570.0" layoutY="342.0" prefHeight="26.0" prefWidth="273.0" />
+      <TableView fx:id="tblItem" layoutX="30.0" layoutY="501.0" prefHeight="200.0" prefWidth="826.0" styleClass="dashboard-colour2" stylesheets="@../css/Table.css">
         <columns>
           <TableColumn fx:id="colItemId" prefWidth="190.0" text="Item ID" />
           <TableColumn fx:id="colItemName" prefWidth="177.0" text="Item Name " />
@@ -120,5 +203,35 @@
             <TableColumn fx:id="colItemUnitPrice" prefWidth="281.0" text="Item Unite Price" />
         </columns>
       </TableView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="29.0" layoutY="154.0" stroke="#767474" strokeType="INSIDE" strokeWidth="0.0" width="35.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6421052813529968" green="0.6421052813529968" blue="0.6421052813529968" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="31.0" layoutY="149.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="35.0" />
+      <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="35.0" layoutY="153.0" onMouseClicked="#homeMouseOnClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/home.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="33.0" layoutY="451.0" stroke="#fff1f1" strokeType="INSIDE" width="688.0">
+         <effect>
+            <Shadow radius="11.754999999999999" width="28.02">
+               <color>
+                  <Color red="0.7263157963752747" green="0.7209356427192688" blue="0.7209356427192688" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="34.0" layoutY="448.0" stroke="WHITE" strokeType="INSIDE" width="688.0" />
+      <Label alignment="CENTER" layoutX="277.0" layoutY="448.0" prefHeight="12.0" prefWidth="241.0" text="View Suppliers" textFill="#767474">
+         <font>
+            <Font name="Dubai Bold" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
