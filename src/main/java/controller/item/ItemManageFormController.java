@@ -59,6 +59,8 @@ public class ItemManageFormController implements Initializable {
     @FXML
     private TextField txtItemUnitPrice;
 
+     ItemService itemService = ItemController.getInstance();
+
     @FXML
     void btnAddItemOnAction(ActionEvent event) {
 

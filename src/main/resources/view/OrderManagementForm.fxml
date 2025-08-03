@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="740.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.order.OderManageFormController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbe5a" height="70.0" layoutX="28.0" layoutY="25.0" stroke="BLACK" strokeType="INSIDE" width="838.0" />
+      <Label alignment="CENTER" layoutX="42.0" layoutY="34.0" prefHeight="36.0" prefWidth="109.0" text="Order ID :" textFill="#e41f1f">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="291.0" layoutY="40.0" prefHeight="36.0" prefWidth="109.0" text="Date :" textFill="#e41f1f">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="582.0" layoutY="34.0" prefHeight="36.0" prefWidth="109.0" text="Time :" textFill="#e41f1f">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <JFXTextField layoutX="158.0" layoutY="42.0" />
+      <JFXTextField layoutX="409.0" layoutY="46.0" />
+      <JFXTextField layoutX="701.0" layoutY="46.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbe5a" height="289.0" layoutX="28.0" layoutY="128.0" stroke="BLACK" strokeType="INSIDE" width="838.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbe5a" height="36.0" layoutX="174.0" layoutY="143.0" stroke="BLACK" strokeType="INSIDE" width="488.0" />
+      <Label alignment="CENTER" layoutX="307.0" layoutY="145.0" prefHeight="38.0" prefWidth="253.0" text="Add To Cart">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="758.0" layoutY="185.0" prefHeight="38.0" prefWidth="94.0" style="-fx-background-color: #54a0ff;" text="Clear Field" />
+      <JFXButton layoutX="758.0" layoutY="234.0" prefHeight="38.0" prefWidth="94.0" style="-fx-background-color: #54a0ff;" text="Clear Table" />
+      <ComboBox layoutX="130.0" layoutY="194.0" prefWidth="150.0" promptText="Supplier ID" />
+      <ComboBox layoutX="130.0" layoutY="263.0" prefWidth="150.0" promptText="Item Code " />
+      <TextField layoutX="323.0" layoutY="289.0" prefHeight="25.0" prefWidth="269.0" text="Item Name" />
+      <TextField layoutX="325.0" layoutY="321.0" prefHeight="25.0" prefWidth="184.0" text="Unite Type" />
+      <TextField layoutX="326.0" layoutY="354.0" prefHeight="25.0" prefWidth="184.0" text="Unite Price" />
+      <TextField layoutX="326.0" layoutY="385.0" prefHeight="25.0" prefWidth="184.0" text="Stock" />
+      <JFXButton layoutX="717.0" layoutY="362.0" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #54a0ff;" text="Clear Table" />
+      <TextField layoutX="718.0" layoutY="321.0" prefHeight="36.0" prefWidth="143.0" text="Quantity" />
+      <JFXTextField layoutX="342.0" layoutY="207.0" prefHeight="25.0" prefWidth="215.0" text="Supplier  Name" />
+      <JFXTextField layoutX="342.0" layoutY="241.0" prefHeight="25.0" prefWidth="215.0" text="Supplier Contact No" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbe5a" height="309.0" layoutX="11.0" layoutY="423.0" stroke="BLACK" strokeType="INSIDE" width="889.0" />
+      <Label alignment="CENTER" layoutX="291.0" layoutY="426.0" prefHeight="38.0" prefWidth="253.0" text="View Cart">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <TableView layoutX="42.0" layoutY="468.0" prefHeight="200.0" prefWidth="814.0">
+        <columns>
+          <TableColumn prefWidth="124.0" text="C1" />
+          <TableColumn prefWidth="130.0" text="C2" />
+            <TableColumn prefWidth="134.0" text="C2" />
+            <TableColumn prefWidth="119.0" text="C2" />
+            <TableColumn prefWidth="138.0" text="C2" />
+            <TableColumn prefWidth="165.0" text="C2" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="789.0" layoutY="679.0" prefHeight="38.0" prefWidth="94.0" style="-fx-background-color: #54a0ff;" text="Place Order" />
+      <Label alignment="CENTER" layoutX="19.0" layoutY="680.0" prefHeight="36.0" prefWidth="100.0" text="Net Total" />
+      <Label layoutX="108.0" layoutY="690.0" prefHeight="17.0" prefWidth="87.0" text="0000" />
+   </children>
+</AnchorPane>
