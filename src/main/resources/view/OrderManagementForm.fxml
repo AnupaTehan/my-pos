@@ -113,7 +113,7 @@
             </Shadow>
          </effect>
       </Rectangle>
-      <JFXButton layoutX="390.0" layoutY="322.0" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Clear Table" textFill="#767474" />
+      <JFXButton layoutX="390.0" layoutY="322.0" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Add to cart" textFill="#767474" />
       <TextField layoutX="594.0" layoutY="229.0" prefHeight="0.0" prefWidth="243.0" text="Quantity" />
       <TableView layoutX="56.0" layoutY="485.0" prefHeight="183.0" prefWidth="794.0">
         <columns>
@@ -164,5 +164,15 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="561.0" layoutY="681.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="135.0">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <JFXButton layoutX="561.0" layoutY="677.0" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Reloard Table" textFill="#767474" />
    </children>
 </AnchorPane>
