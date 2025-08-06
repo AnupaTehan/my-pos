@@ -61,13 +61,14 @@ public class SupplierController implements SupplierService {
 
     @Override
     public boolean deleteSupplier(String supplierId) {
-        String SQL = "DELETE FROM supplier WHERE supplierId = ' "+supplierId +"'";
-        try{
-            return CrudUtil.execute(SQL);
+        String SQL = "DELETE FROM supplier WHERE supplierId = ?";
+        try {
+            return CrudUtil.execute(SQL, supplierId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public Supplier SearchSupplier(String supplierId) {
@@ -135,6 +136,13 @@ public class SupplierController implements SupplierService {
 
     @Override
     public ObservableList<String> getSupplierIds() {
-        return null;
+        ObservableList <String> suppliersId =  FXCollections.observableArrayList();
+        ObservableList<Supplier>supplierObservableList = getAll();
+        supplierObservableList.forEach(supplier -> {
+            suppliersId.add(supplier.getSupplierId());
+        });
+
+
+        return suppliersId;
     }
 }

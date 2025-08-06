@@ -12,6 +12,8 @@ public interface ItemService {
 
     boolean updateItem(Item item);
 
+    boolean deleteItem(String itemId ) ;
+
     Item searchItem(String itemId);
 
     ObservableList<Item> getAll();
@@ -20,6 +22,8 @@ public interface ItemService {
 
     boolean updateStock(List<OrderDetails> orderDetailsList);
 
+    ObservableList<String>getItemIds();
 
 
+    Item searchItemByName(String itemName);
 }

@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import single.ItemManageForm;
+import single.OrderManageForm;
 import single.SupplierManageForm;
 
 public class DashboardFormController {
@@ -16,6 +17,8 @@ public class DashboardFormController {
 
     @FXML
     void btnPurchaseOrderOnAction(ActionEvent event) {
+       OrderManageForm orderManageForm= OrderManageForm.getInstance();
+        orderManageForm.show();
 
     }
 
@@ -24,5 +27,7 @@ public class DashboardFormController {
         SupplierManageForm supplierManageForm = SupplierManageForm.getInstance();
         supplierManageForm.show();
     }
+
+
 
 }
