@@ -201,17 +201,15 @@ public class OderManageFormController  implements Initializable {
             txtItemStock.setText(String.valueOf(item.getQuantity()));
             cmbItemId.setValue(item.getItemId());
         } else {
-            clearItemFields(); // If no match found, clear fields
+            new Alert(Alert.AlertType.ERROR,"No item found with the name").show();
+            clearItemFields();
         }
     }
 
 
-
-
-
-
-
-
+    private void searchSupplierByName(String supplierName){
+        
+    }
 
     private void clearItemFields() {
         txtItemName.setText(null);
