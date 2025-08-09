@@ -20,7 +20,7 @@ public interface ItemService {
 
     String getNextItemId();
 
-    boolean updateStock(List<OrderDetails> orderDetailsList);
+//    boolean updateStock(List<OrderDetails> orderDetailsList);
 
     ObservableList<String>getItemIds();
 

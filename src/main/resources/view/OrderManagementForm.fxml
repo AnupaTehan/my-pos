@@ -98,7 +98,7 @@
       <JFXButton layoutX="545.0" layoutY="322.0" onAction="#btnClearTableOnAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Clear Table" textFill="#767474" />
       <ComboBox fx:id="cmbSupplierId" layoutX="51.0" layoutY="194.0" prefHeight="26.0" prefWidth="243.0" promptText="Supplier ID" />
       <ComboBox fx:id="cmbItemId" layoutX="324.0" layoutY="193.0" prefHeight="26.0" prefWidth="243.0" promptText="Item Code " />
-      <TextField fx:id="txtItemName" layoutX="324.0" layoutY="229.0" prefHeight="26.0" prefWidth="243.0" text="Item Name" />
+      <TextField fx:id="txtItemName" layoutX="324.0" layoutY="229.0" prefHeight="26.0" prefWidth="243.0" promptText="Item Name" />
       <TextField fx:id="txtItemUniteType" layoutX="324.0" layoutY="267.0" prefHeight="26.0" prefWidth="243.0" text="Unite Type" />
       <TextField fx:id="txtUnitePrice" layoutX="594.0" layoutY="194.0" prefHeight="26.0" prefWidth="243.0" text="Unite Price" />
       <TextField fx:id="txtItemStock" layoutX="593.0" layoutY="229.0" prefHeight="26.0" prefWidth="243.0" text="Stock" />
@@ -112,15 +112,14 @@
          </effect>
       </Rectangle>
       <JFXButton layoutX="390.0" layoutY="322.0" onAction="#btnAddToCartOnAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Add to cart" textFill="#767474" />
-      <TextField fx:id="txtItemQuantity" layoutX="593.0" layoutY="268.0" prefHeight="0.0" prefWidth="243.0" text="Quantity" />
+      <TextField fx:id="txtItemQuantity" layoutX="593.0" layoutY="268.0" prefHeight="0.0" prefWidth="243.0" promptText="Quantity" />
       <TableView fx:id="tblOrder" layoutX="56.0" layoutY="485.0" prefHeight="183.0" prefWidth="794.0" styleClass="dashboard-colour2" stylesheets="@../css/Table.css">
         <columns>
           <TableColumn fx:id="colItemId" prefWidth="124.0" text="Item ID" />
-          <TableColumn fx:id="colItemName" prefWidth="130.0" text="ItemName" />
-            <TableColumn fx:id="colItemType" prefWidth="134.0" text="Item Type" />
-            <TableColumn fx:id="colQuantity" prefWidth="119.0" text="Quantity" />
-            <TableColumn fx:id="colUnitPrice" prefWidth="138.0" text="Unit Price" />
-            <TableColumn fx:id="colTotal" prefWidth="165.0" text="Total" />
+          <TableColumn fx:id="colItemName" prefWidth="177.0" text="ItemName" />
+            <TableColumn fx:id="colQuantity" prefWidth="130.0" text="Quantity" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="173.0" text="Unit Price" />
+            <TableColumn fx:id="colTotal" prefWidth="189.0" text="Total" />
         </columns>
       </TableView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="714.0" layoutY="683.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="135.0">

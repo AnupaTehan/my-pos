@@ -18,4 +18,6 @@ public interface SupplierService {
     String getNextSupplierId();
 
     ObservableList<String> getSupplierIds();
+
+    Supplier searchSupplierByName(String supplierName);
 }

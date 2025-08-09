@@ -15,5 +15,8 @@ import java.util.List;
 public class Orders {
  private String orderId;
  private String orderDate;
+ private String supplierId;
+ private String supplierName;
+ private String contactNo;
  List<OrderDetails> orderDetailsList;
 }

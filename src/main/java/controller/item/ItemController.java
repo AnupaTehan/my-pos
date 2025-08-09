@@ -145,11 +145,11 @@ public class ItemController implements ItemService {
 
 
     }
-
-    @Override
-    public boolean updateStock(List<OrderDetails> orderDetailsList) {
-        return false;
-    }
+//
+//    @Override
+//    public boolean updateStock(List<OrderDetails> orderDetailsList) {
+//        return false;
+//    }
 
     @Override
     public ObservableList<String> getItemIds() {

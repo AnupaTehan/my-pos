@@ -3,6 +3,7 @@ package controller.supplier;
 import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Item;
 import model.Supplier;
 import util.CrudUtil;
 
@@ -145,4 +146,30 @@ public class SupplierController implements SupplierService {
 
         return suppliersId;
     }
+
+    @Override
+    public Supplier searchSupplierByName(String supplierName) {
+        String SQL = "SELECT * FROM supplier WHERE supplierName = ?";
+
+
+        try{
+            Connection connection =  DBConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement(SQL);
+            pstm.setString(1, supplierName);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                return new Supplier(
+                        rs.getString("supplierId"),
+                        rs.getString("supplierName"),
+                        rs.getString("supplierAddress"),
+                        rs.getString("contactNo")
+
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

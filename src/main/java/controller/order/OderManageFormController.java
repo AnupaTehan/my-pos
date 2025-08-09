@@ -7,13 +7,17 @@ import controller.supplier.SupplierService;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
+import model.CartList;
 import model.Item;
+import model.Supplier;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -59,7 +63,7 @@ public class OderManageFormController  implements Initializable {
     private Label lblTime;
 
     @FXML
-    private TableView<?> tblOrder;
+    private TableView tblOrder;
 
     @FXML
     private TextField txtItemName;
@@ -87,13 +91,62 @@ public class OderManageFormController  implements Initializable {
 
     OrderService orderService = OrderController.getInstance();
 
+    ObservableList <CartList> cartListObservableList = FXCollections.observableArrayList();
+
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
+      colItemId.setCellValueFactory(new PropertyValueFactory<>("itemId"));
+      colItemName.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+      colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+      colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+      colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
+
+      String itemCode = cmbItemId.getValue().toString();
+      String itemName = txtItemName.getText();
+      Integer quantity = Integer.parseInt(txtItemQuantity.getText());
+      Double unitePrice = Double.parseDouble(txtUnitePrice.getText());
+      Double total = unitePrice*quantity;
+
+
+
+      boolean state = true;
+
+      if(Integer.parseInt(txtItemQuantity.getText())>Integer.parseInt(txtItemStock.getText())){
+          new Alert(Alert.AlertType.ERROR , "No Sufficient Sock Available").show();
+          state = false;
+          txtItemQuantity.setText(null);
+          txtItemQuantity.setPromptText("Quantity");
+      }
+      if (state){
+          cartListObservableList.add(new CartList(itemCode,itemName,quantity,unitePrice,total));
+          tblOrder.setItems(cartListObservableList);
+          lblNetTotal.setText("RS ."+calculateTotal());
+          clearItemFields();
+      }
+
+
+
+    }
+
+    private Double calculateTotal() {
+        Double netTotal = 0.0;
+        for(CartList cartList : cartListObservableList){
+            netTotal =  netTotal + cartList.getTotal();
+        }
+        return  netTotal;
     }
 
     @FXML
     void btnClearFieldOnAction(ActionEvent event) {
+        clearSupplierFields();
+        clearItemFields();
+
+
+
+
+
+
 
     }
 
@@ -119,7 +172,7 @@ public class OderManageFormController  implements Initializable {
         loadSuppliersIDs();
         loadItemIDs();
 
-        // Trigger search on Enter
+        // Trigger search on Enter for item name
         txtItemName.setOnAction(event -> {
             String name = txtItemName.getText().trim();
             if (!name.isEmpty()) {
@@ -129,18 +182,42 @@ public class OderManageFormController  implements Initializable {
             }
         });
 
-// Clear field when focused
+        // Clear item name when focused
         txtItemName.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal) { // When field gets focus
+            if (newVal) {
                 txtItemName.clear();
             }
         });
 
+        // Trigger search on Enter for supplier name
+        txtSupplierName.setOnAction(event -> {
+            String supplierName = txtSupplierName.getText().trim();
+            if (!supplierName.isEmpty()) {
+                searchSupplierByName(supplierName);
+            } else {
+                clearSupplierFields();
+            }
+        });
 
+        // Clear supplier name when focused
+        txtSupplierName.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                txtSupplierName.clear();
+            }
+        });
 
-
-
+        cmbSupplierId.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                searchBySupplierId(newVal.toString());
+            }
+        });
+        cmbItemId.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                searchByItemId(newVal.toString());
+            }
+        });
     }
+
 
     private void loadItemIDs() {
         ObservableList<String> itemIds = ItemController.getInstance().getItemIds();
@@ -208,8 +285,51 @@ public class OderManageFormController  implements Initializable {
 
 
     private void searchSupplierByName(String supplierName){
+        Supplier supplier = SupplierController.getInstance().searchSupplierByName(supplierName);
+
+        if (supplier != null){
+            txtSupplierName.setText(supplier.getSupplierName());
+            txtSupplierContactNo.setText(supplier.getContactNo());
+            cmbSupplierId.setValue(supplier.getSupplierId());
+        }else {
+            new Alert(Alert.AlertType.ERROR,"No Supplier found with the name").show();
+            clearItemFields();
+        }
         
     }
+
+
+    private void searchBySupplierId (String supplierId){
+
+        Supplier supplier = SupplierController.getInstance().SearchSupplier(supplierId);
+        if (supplier != null){
+            txtSupplierName.setText(supplier.getSupplierName());
+            txtSupplierContactNo.setText(supplier.getContactNo());
+            cmbSupplierId.setValue(supplier.getSupplierId());
+        }else {
+            new Alert(Alert.AlertType.ERROR,"No Supplier found with the ID").show();
+            clearItemFields();
+        }
+
+    }
+
+
+    private void searchByItemId(String itemId){
+        Item item = ItemController.getInstance().searchItem(itemId);
+        if (item != null) {
+            txtItemName.setText(item.getItemName());
+            txtItemUniteType.setText(item.getUnitType());
+            txtUnitePrice.setText(String.valueOf(item.getUnitPrice()));
+            txtItemStock.setText(String.valueOf(item.getQuantity()));
+            cmbItemId.setValue(item.getItemId());
+        } else {
+            new Alert(Alert.AlertType.ERROR,"No item found with the id").show();
+            clearItemFields();
+        }
+
+    }
+
+
 
     private void clearItemFields() {
         txtItemName.setText(null);
@@ -217,7 +337,32 @@ public class OderManageFormController  implements Initializable {
         txtUnitePrice.setText(null);
         txtItemStock.setText(null);
         txtItemQuantity.setText(null);
-        cmbItemId.getSelectionModel().clearSelection();
+//        cmbItemId.getSelectionModel().clearSelection();
         cmbItemId.setValue(null);
+
+
+        txtItemName.setPromptText("Enter Item Name");
+        txtItemUniteType.setPromptText("Unit Type");
+        txtUnitePrice.setPromptText("Unit Price");
+        txtItemStock.setPromptText("Stock");
+        txtItemQuantity.setPromptText("Quantity");
+
+        cmbItemId.setEditable(true);
+        cmbItemId.setPromptText("Select Item ID");
     }
+
+    private  void clearSupplierFields(){
+
+        cmbSupplierId.setValue(null);
+        txtSupplierName.setText(null);
+        txtSupplierContactNo.setText(null);
+
+        txtSupplierName.setPromptText("Enter Supplier Name");
+        txtSupplierContactNo.setPromptText("Contact No");
+        cmbSupplierId.setEditable(true);
+        cmbSupplierId.setPromptText("Select Supplier ID");
+    }
+
+
+
 }
