@@ -2,9 +2,9 @@ package controller.item;
 
 import javafx.collections.ObservableList;
 import model.Item;
-import model.OrderDetails;
 
 import java.util.List;
+
 
 public interface ItemService {
 
@@ -20,10 +20,8 @@ public interface ItemService {
 
     String getNextItemId();
 
-//    boolean updateStock(List<OrderDetails> orderDetailsList);
-
     ObservableList<String>getItemIds();
 
 
-    Item searchItemByName(String itemName);
+    List<Item> searchItemsByNamePattern(String itemNamePart);
 }

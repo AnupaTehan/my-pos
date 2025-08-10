@@ -99,9 +99,8 @@
       <ComboBox fx:id="cmbSupplierId" layoutX="51.0" layoutY="194.0" prefHeight="26.0" prefWidth="243.0" promptText="Supplier ID" />
       <ComboBox fx:id="cmbItemId" layoutX="324.0" layoutY="193.0" prefHeight="26.0" prefWidth="243.0" promptText="Item Code " />
       <TextField fx:id="txtItemName" layoutX="324.0" layoutY="229.0" prefHeight="26.0" prefWidth="243.0" promptText="Item Name" />
-      <TextField fx:id="txtItemUniteType" layoutX="324.0" layoutY="267.0" prefHeight="26.0" prefWidth="243.0" text="Unite Type" />
-      <TextField fx:id="txtUnitePrice" layoutX="594.0" layoutY="194.0" prefHeight="26.0" prefWidth="243.0" text="Unite Price" />
-      <TextField fx:id="txtItemStock" layoutX="593.0" layoutY="229.0" prefHeight="26.0" prefWidth="243.0" text="Stock" />
+      <TextField fx:id="txtItemUniteType" layoutX="324.0" layoutY="267.0" prefHeight="26.0" prefWidth="243.0" promptText="Unite Type" />
+      <TextField fx:id="txtUnitePrice" layoutX="594.0" layoutY="194.0" prefHeight="26.0" prefWidth="243.0" promptText="Unite Price" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="390.0" layoutY="325.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="135.0">
          <effect>
             <Shadow>
@@ -112,7 +111,7 @@
          </effect>
       </Rectangle>
       <JFXButton layoutX="390.0" layoutY="322.0" onAction="#btnAddToCartOnAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Add to cart" textFill="#767474" />
-      <TextField fx:id="txtItemQuantity" layoutX="593.0" layoutY="268.0" prefHeight="0.0" prefWidth="243.0" promptText="Quantity" />
+      <TextField fx:id="txtItemQuantity" layoutX="593.0" layoutY="234.0" prefHeight="0.0" prefWidth="243.0" promptText="Quantity" />
       <TableView fx:id="tblOrder" layoutX="56.0" layoutY="485.0" prefHeight="183.0" prefWidth="794.0" styleClass="dashboard-colour2" stylesheets="@../css/Table.css">
         <columns>
           <TableColumn fx:id="colItemId" prefWidth="124.0" text="Item ID" />
@@ -144,8 +143,8 @@
       <JFXButton layoutX="714.0" layoutY="679.0" onAction="#btnPlaceHolderOnAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Place Order" textFill="#767474" />
       <Label alignment="CENTER" layoutX="56.0" layoutY="680.0" prefHeight="36.0" prefWidth="100.0" text="Net Total :" textFill="#767474" />
       <Label fx:id="lblNetTotal" layoutX="156.0" layoutY="689.0" prefHeight="17.0" prefWidth="87.0" text="0000" textFill="#767474" />
-      <TextField fx:id="txtSupplierName" layoutX="51.0" layoutY="229.0" prefHeight="26.0" prefWidth="243.0" text="Supplier  Name" />
-      <TextField fx:id="txtSupplierContactNo" layoutX="51.0" layoutY="267.0" prefHeight="26.0" prefWidth="243.0" text="Supplier Contact No" />
+      <TextField fx:id="txtSupplierName" layoutX="51.0" layoutY="229.0" prefHeight="26.0" prefWidth="243.0" promptText="Supplier  Name" />
+      <TextField fx:id="txtSupplierContactNo" layoutX="51.0" layoutY="267.0" prefHeight="26.0" prefWidth="243.0" promptText="Supplier Contact No" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="36.0" layoutX="70.0" layoutY="438.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="755.0">
          <effect>
             <Shadow>
@@ -161,16 +160,6 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="561.0" layoutY="681.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="135.0">
-         <effect>
-            <Shadow>
-               <color>
-                  <Color red="0.6431372761726379" green="0.6431372761726379" blue="0.6431372761726379" />
-               </color>
-            </Shadow>
-         </effect>
-      </Rectangle>
-      <JFXButton layoutX="561.0" layoutY="677.0" onAction="#btnReloadOnAction" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: #ffffff;" text="Reload " textFill="#767474" />
       <Label fx:id="lblDate" alignment="CENTER" layoutX="397.0" layoutY="44.0" prefHeight="35.0" prefWidth="135.0" text="2023-09-01">
          <font>
             <Font name="System Bold Italic" size="18.0" />
@@ -186,5 +175,6 @@
             <Font name="System Bold Italic" size="26.0" />
          </font>
       </Label>
+      <TextField fx:id="txtSupplierEmail" layoutX="51.0" layoutY="305.0" prefHeight="26.0" prefWidth="243.0" promptText="Supplier Eamil" />
    </children>
 </AnchorPane>

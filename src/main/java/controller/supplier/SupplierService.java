@@ -3,6 +3,8 @@ package controller.supplier;
 import javafx.collections.ObservableList;
 import model.Supplier;
 
+import java.util.List;
+
 public interface SupplierService {
 
     boolean addSupplier(Supplier supplier);
@@ -19,5 +21,6 @@ public interface SupplierService {
 
     ObservableList<String> getSupplierIds();
 
-    Supplier searchSupplierByName(String supplierName);
+
+    List<Supplier> searchSupplierByNamePattern(String supplierNamePart);
 }

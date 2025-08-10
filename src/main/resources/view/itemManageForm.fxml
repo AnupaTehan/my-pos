@@ -200,7 +200,7 @@
             <TableColumn fx:id="colItemName" prefWidth="188.0" text="ItemName" />
             <TableColumn fx:id="colItemType" prefWidth="129.0" text="Item Type" />
             <TableColumn fx:id="colItemUnitPrice" prefWidth="255.0" text="Item Unite Price" />
-            <TableColumn fx:id="colItemQuantity" prefWidth="154.0" text="Quantity" />
+            <TableColumn fx:id="colItemDate" prefWidth="154.0" text="Quantity" />
          </columns>
       </TableView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="29.0" layoutY="110.0" stroke="#767474" strokeType="INSIDE" strokeWidth="0.0" width="35.0">
@@ -233,13 +233,13 @@
             <Font name="Dubai Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtItemQuantity" layoutX="31.0" layoutY="338.0" prefHeight="26.0" prefWidth="322.0" promptText="Quantity" />
-      <Label layoutX="412.0" layoutY="343.0" prefHeight="27.0" prefWidth="190.0" text="Quantity" textFill="#a4a4a4">
+      <TextField fx:id="txtItemDate" layoutX="31.0" layoutY="338.0" prefHeight="26.0" prefWidth="322.0" promptText="Date" />
+      <Label layoutX="412.0" layoutY="343.0" prefHeight="27.0" prefWidth="190.0" text="Date" textFill="#a4a4a4">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <ComboBox fx:id="itemUnitType" layoutX="572.0" layoutY="275.0" prefHeight="26.0" prefWidth="273.0" promptText="Item Type" />
-      <TextField fx:id="itemQuantity" layoutX="570.0" layoutY="344.0" prefHeight="26.0" prefWidth="273.0" />
+      <TextField fx:id="itemDate" layoutX="570.0" layoutY="344.0" prefHeight="26.0" prefWidth="273.0" />
    </children>
 </AnchorPane>

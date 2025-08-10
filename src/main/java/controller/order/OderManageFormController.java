@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
@@ -22,13 +23,26 @@ import model.Supplier;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
+
 public class OderManageFormController  implements Initializable {
 
-    public Label lblOrderID;
+    private ContextMenu suggestionsMenu = new ContextMenu();
+
+    private ContextMenu itemSuggestionsMenu = new ContextMenu();
+
+
+    @FXML
+    private Label lblOrderID;
+
+    @FXML
+    private TextField txtSupplierEmail;
+
     @FXML
     private ComboBox cmbItemId;
 
@@ -104,8 +118,9 @@ public class OderManageFormController  implements Initializable {
 
       String itemCode = cmbItemId.getValue().toString();
       String itemName = txtItemName.getText();
-      Integer quantity = Integer.parseInt(txtItemQuantity.getText());
+      String itemType = txtItemUniteType.getText();
       Double unitePrice = Double.parseDouble(txtUnitePrice.getText());
+      Integer quantity = Integer.parseInt(txtItemQuantity.getText());
       Double total = unitePrice*quantity;
 
 
@@ -119,7 +134,7 @@ public class OderManageFormController  implements Initializable {
           txtItemQuantity.setPromptText("Quantity");
       }
       if (state){
-          cartListObservableList.add(new CartList(itemCode,itemName,quantity,unitePrice,total));
+          cartListObservableList.add(new CartList(itemCode,itemName,unitePrice,quantity,total));
           tblOrder.setItems(cartListObservableList);
           lblNetTotal.setText("RS ."+calculateTotal());
           clearItemFields();
@@ -152,18 +167,19 @@ public class OderManageFormController  implements Initializable {
 
     @FXML
     void btnClearTableOnAction(ActionEvent event) {
+        tblOrder.getItems().clear();
+        lblNetTotal.setText("Rs.0000");
 
     }
 
     @FXML
     void btnPlaceHolderOnAction(ActionEvent event) {
 
-    }
 
-    @FXML
-    void btnReloadOnAction(ActionEvent event) {
 
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -172,51 +188,88 @@ public class OderManageFormController  implements Initializable {
         loadSuppliersIDs();
         loadItemIDs();
 
-        // Trigger search on Enter for item name
-        txtItemName.setOnAction(event -> {
-            String name = txtItemName.getText().trim();
-            if (!name.isEmpty()) {
-                searchItemByName(name);
+        txtSupplierName.textProperty().addListener((obs, oldText, newText) -> {
+            if (newText.length() >= 1) { // start showing suggestions after typing 1 letter
+                showSuggestions(newText);
             } else {
-                clearItemFields();
+                suggestionsMenu.hide();
             }
         });
 
-        // Clear item name when focused
-        txtItemName.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                txtItemName.clear();
-            }
-        });
-
-        // Trigger search on Enter for supplier name
-        txtSupplierName.setOnAction(event -> {
-            String supplierName = txtSupplierName.getText().trim();
-            if (!supplierName.isEmpty()) {
-                searchSupplierByName(supplierName);
+        txtItemName.textProperty().addListener((obs, oldText, newText) -> {
+            if (newText.length() >= 1) { // start showing suggestions after 1 letter
+                showItemSuggestions(newText);
             } else {
-                clearSupplierFields();
+                itemSuggestionsMenu.hide();
             }
         });
 
-        // Clear supplier name when focused
-        txtSupplierName.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                txtSupplierName.clear();
-            }
-        });
 
-        cmbSupplierId.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                searchBySupplierId(newVal.toString());
-            }
-        });
-        cmbItemId.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                searchByItemId(newVal.toString());
-            }
-        });
     }
+
+    private void showItemSuggestions(String searchText) {
+        List<Item> items = ItemController.getInstance().searchItemsByNamePattern(searchText);
+
+        if (items.isEmpty()) {
+            itemSuggestionsMenu.hide();
+            return;
+        }
+
+        List<MenuItem> menuItems = new ArrayList<>();
+        for (Item item : items) {
+            MenuItem menuItem = new MenuItem(item.getItemName());
+            menuItem.setOnAction(e -> {
+                // Fill fields when user selects an item
+                txtItemName.setText(item.getItemName());
+                txtUnitePrice.setText(String.valueOf(item.getUnitPrice()));
+                txtItemUniteType.setText(item.getUnitType());
+                cmbItemId.setValue(item.getItemId());
+
+                itemSuggestionsMenu.hide();
+            });
+            menuItems.add(menuItem);
+        }
+
+        itemSuggestionsMenu.getItems().clear();
+        itemSuggestionsMenu.getItems().addAll(menuItems);
+
+        if (!itemSuggestionsMenu.isShowing()) {
+            itemSuggestionsMenu.show(txtItemName, Side.BOTTOM, 0, 0);
+        }
+    }
+
+
+    private void showSuggestions(String searchText) {
+        List<Supplier> suppliers = SupplierController.getInstance().searchSupplierByNamePattern(searchText);
+
+        if (suppliers.isEmpty()) {
+            suggestionsMenu.hide();
+            return;
+        }
+
+        List<MenuItem> menuItems = new ArrayList<>();
+        for (Supplier supplier : suppliers) {
+            MenuItem item = new MenuItem(supplier.getSupplierName());
+            item.setOnAction(e -> {
+                // Fill fields when user clicks suggestion
+                txtSupplierName.setText(supplier.getSupplierName());
+                txtSupplierContactNo.setText(supplier.getContactNo());
+                cmbSupplierId.setValue(supplier.getSupplierId());
+                txtSupplierEmail.setText(supplier.getSupplierEmail());
+            });
+            menuItems.add(item);
+        }
+
+        suggestionsMenu.getItems().clear();
+        suggestionsMenu.getItems().addAll(menuItems);
+
+        if (!suggestionsMenu.isShowing()) {
+            suggestionsMenu.show(txtSupplierName, Side.BOTTOM, 0, 0);
+        }
+    }
+
+
+
 
 
     private void loadItemIDs() {
@@ -268,66 +321,9 @@ public class OderManageFormController  implements Initializable {
 
     }
 
-    private void searchItemByName(String itemName) {
-        Item item = ItemController.getInstance().searchItemByName(itemName); // You must implement this in your ItemController
-
-        if (item != null) {
-            txtItemName.setText(item.getItemName());
-            txtItemUniteType.setText(item.getUnitType());
-            txtUnitePrice.setText(String.valueOf(item.getUnitPrice()));
-            txtItemStock.setText(String.valueOf(item.getQuantity()));
-            cmbItemId.setValue(item.getItemId());
-        } else {
-            new Alert(Alert.AlertType.ERROR,"No item found with the name").show();
-            clearItemFields();
-        }
-    }
 
 
-    private void searchSupplierByName(String supplierName){
-        Supplier supplier = SupplierController.getInstance().searchSupplierByName(supplierName);
 
-        if (supplier != null){
-            txtSupplierName.setText(supplier.getSupplierName());
-            txtSupplierContactNo.setText(supplier.getContactNo());
-            cmbSupplierId.setValue(supplier.getSupplierId());
-        }else {
-            new Alert(Alert.AlertType.ERROR,"No Supplier found with the name").show();
-            clearItemFields();
-        }
-        
-    }
-
-
-    private void searchBySupplierId (String supplierId){
-
-        Supplier supplier = SupplierController.getInstance().SearchSupplier(supplierId);
-        if (supplier != null){
-            txtSupplierName.setText(supplier.getSupplierName());
-            txtSupplierContactNo.setText(supplier.getContactNo());
-            cmbSupplierId.setValue(supplier.getSupplierId());
-        }else {
-            new Alert(Alert.AlertType.ERROR,"No Supplier found with the ID").show();
-            clearItemFields();
-        }
-
-    }
-
-
-    private void searchByItemId(String itemId){
-        Item item = ItemController.getInstance().searchItem(itemId);
-        if (item != null) {
-            txtItemName.setText(item.getItemName());
-            txtItemUniteType.setText(item.getUnitType());
-            txtUnitePrice.setText(String.valueOf(item.getUnitPrice()));
-            txtItemStock.setText(String.valueOf(item.getQuantity()));
-            cmbItemId.setValue(item.getItemId());
-        } else {
-            new Alert(Alert.AlertType.ERROR,"No item found with the id").show();
-            clearItemFields();
-        }
-
-    }
 
 
 
@@ -335,19 +331,10 @@ public class OderManageFormController  implements Initializable {
         txtItemName.setText(null);
         txtItemUniteType.setText(null);
         txtUnitePrice.setText(null);
-        txtItemStock.setText(null);
         txtItemQuantity.setText(null);
-//        cmbItemId.getSelectionModel().clearSelection();
         cmbItemId.setValue(null);
 
-
-        txtItemName.setPromptText("Enter Item Name");
-        txtItemUniteType.setPromptText("Unit Type");
-        txtUnitePrice.setPromptText("Unit Price");
-        txtItemStock.setPromptText("Stock");
-        txtItemQuantity.setPromptText("Quantity");
-
-        cmbItemId.setEditable(true);
+        cmbItemId.setEditable(false);
         cmbItemId.setPromptText("Select Item ID");
     }
 
@@ -356,10 +343,7 @@ public class OderManageFormController  implements Initializable {
         cmbSupplierId.setValue(null);
         txtSupplierName.setText(null);
         txtSupplierContactNo.setText(null);
-
-        txtSupplierName.setPromptText("Enter Supplier Name");
-        txtSupplierContactNo.setPromptText("Contact No");
-        cmbSupplierId.setEditable(true);
+        cmbSupplierId.setEditable(false);
         cmbSupplierId.setPromptText("Select Supplier ID");
     }
 

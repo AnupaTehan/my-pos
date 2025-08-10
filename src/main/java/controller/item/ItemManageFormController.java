@@ -15,10 +15,18 @@ import model.Supplier;
 import single.DashBoardForm;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ItemManageFormController implements Initializable {
+
+    public TableColumn colItemDate;
+
+    public TextField txtItemDate;
+
+    public TextField itemDate;
 
     @FXML
     private ComboBox itemUnitType;
@@ -89,7 +97,7 @@ public class ItemManageFormController implements Initializable {
                 txtItemName.getText(),
                 cmdItemType.getValue().toString(),
                 Double.parseDouble(txtItemUnitPrice.getText()),
-                Integer.parseInt(txtItemQuantity.getText())
+                txtItemDate.getText()
         );
         if (itemservice.addItem(item)){
             new Alert(Alert.AlertType.INFORMATION, "Item Added Successfully").show();
@@ -106,7 +114,7 @@ public class ItemManageFormController implements Initializable {
     private void clearField() {
         txtItemName.setText(null);
         txtItemUnitPrice.setText(null);
-        txtItemQuantity.setText(null);
+        txtItemDate.setText(null);
     }
 
 
@@ -149,9 +157,9 @@ public class ItemManageFormController implements Initializable {
             itemId.setText(item.getItemId());
             itemName.setText(item.getItemName());
             itemUnitType.setValue(item.getUnitType());
-
             itemUnitPrice.setText(String.valueOf(item.getUnitPrice()));
-            itemQuantity.setText(String.valueOf(item.getQuantity()));
+            itemDate.setText(item.getDate());
+
         } else {
             new Alert(Alert.AlertType.ERROR, "Invalid Item ID! Please try again.").show();
             clearSearchField();
@@ -172,7 +180,7 @@ public class ItemManageFormController implements Initializable {
           itemName.getText(),
           itemUnitType.getValue().toString(),
                 Double.parseDouble(itemUnitPrice.getText()),
-                Integer.parseInt(itemQuantity.getText())
+                itemDate.getText()
         );
         if (itemservice.updateItem(item)){
             new Alert(Alert.AlertType.INFORMATION,"Item Updated Successfully").show();
@@ -199,7 +207,7 @@ public class ItemManageFormController implements Initializable {
         colItemName.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         colItemType.setCellValueFactory(new PropertyValueFactory<>("unitType"));
         colItemUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-        colItemQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colItemDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         ObservableList<String> itemTypeList = FXCollections.observableArrayList("Each", "Pair");
         cmdItemType.setItems(itemTypeList);
@@ -207,6 +215,8 @@ public class ItemManageFormController implements Initializable {
 
         loadTable();
         nextIdGenerated();
+
+        txtItemDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     }
 
     private void loadTable() {

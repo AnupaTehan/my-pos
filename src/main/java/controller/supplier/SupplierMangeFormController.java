@@ -16,6 +16,11 @@ import java.util.ResourceBundle;
 
 public class SupplierMangeFormController implements Initializable {
 
+    public TableColumn colSupplierEmail;
+
+    public TextField txtSupplierEmail;
+
+    public TextField supplierEmail;
     @FXML
     private TextField SupplierAddress;
 
@@ -76,6 +81,7 @@ public class SupplierMangeFormController implements Initializable {
                     txtSupplierId.getText(),
                     txtSupplierName.getText(),
                     txtSupplierAddress.getText(),
+                    txtSupplierEmail.getText(),
                     txtSupplierContactNo.getText()
             );
             if(supplierService.addSupplier(supplier)){
@@ -100,6 +106,7 @@ public class SupplierMangeFormController implements Initializable {
         SupplierId.setText(null);
         SupplierName.setText(null);
         SupplierAddress.setText(null);
+        supplierEmail.setText(null);
         SupplierContactNo.setText(null);
 
     }
@@ -131,6 +138,7 @@ public class SupplierMangeFormController implements Initializable {
             SupplierId.setText(supplier.getSupplierId());
             SupplierName.setText(supplier.getSupplierName());
             SupplierAddress.setText(supplier.getSupplierAddress());
+            supplierEmail.setText(supplier.getSupplierEmail());
             SupplierContactNo.setText(supplier.getContactNo());
         }else{
             new Alert(Alert.AlertType.ERROR,"Invalid Supplier Id! please try again").show();
@@ -144,6 +152,7 @@ public class SupplierMangeFormController implements Initializable {
         SupplierId.setText(null);
         SupplierName.setText(null);
         SupplierAddress.setText(null);
+        supplierEmail.setText(null);
         SupplierContactNo.setText(null);
     }
 
@@ -154,6 +163,7 @@ public class SupplierMangeFormController implements Initializable {
                 SupplierId.getText(),
                 SupplierName.getText(),
                 SupplierAddress.getText(),
+                supplierEmail.getText(),
                 SupplierContactNo.getText()
         );
         if (supplierService.updateSupplier(supplier)){
@@ -178,6 +188,7 @@ public class SupplierMangeFormController implements Initializable {
         txtSupplierId.setText(null);
         txtSupplierName.setText(null);
         txtSupplierAddress.setText(null);
+        txtSupplierEmail.setText(null);
         txtSupplierContactNo.setText(null);
     }
 
@@ -216,6 +227,7 @@ public class SupplierMangeFormController implements Initializable {
         colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
         colSupplierName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
         colSupplierAddress.setCellValueFactory(new PropertyValueFactory<>("supplierAddress"));
+        colSupplierEmail.setCellValueFactory(new PropertyValueFactory<>("supplierEmail"));
         colSupplierContactNo.setCellValueFactory(new PropertyValueFactory<>("contactNo"));
 
         loadTable();

@@ -1,6 +1,5 @@
 package model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,5 +17,7 @@ public class Orders {
  private String supplierId;
  private String supplierName;
  private String contactNo;
- List<OrderDetails> orderDetailsList;
+ private String supplierEmail;
+List <CartList> cartLists;
+
 }

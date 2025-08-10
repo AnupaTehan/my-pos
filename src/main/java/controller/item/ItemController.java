@@ -1,17 +1,16 @@
 package controller.item;
 
-import controller.supplier.SupplierController;
 import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Item;
-import model.OrderDetails;
 import util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemController implements ItemService {
@@ -37,7 +36,7 @@ public class ItemController implements ItemService {
                     item.getItemName(),
                     item.getUnitType(),
                     item.getUnitPrice(),
-                    item.getQuantity()
+                    item.getDate()
             );
 
 
@@ -50,14 +49,14 @@ public class ItemController implements ItemService {
     public boolean updateItem(Item item) {
 
         String itemId = item.getItemId();
-        String SQL = "UPDATE item SET itemName = ?, unitType = ?, unitPrice = ?,quantity = ?  WHERE itemId = ?";
+        String SQL = "UPDATE item SET itemName = ?, unitType = ?, unitPrice = ?,date = ?  WHERE itemId = ?";
         try{
             return CrudUtil.execute(
                     SQL,
                     item.getItemName(),
                     item.getUnitType(),
                     item.getUnitPrice(),
-                    item.getQuantity(),
+                    item.getDate(),
                     item.getItemId()
             );
 
@@ -89,7 +88,7 @@ public class ItemController implements ItemService {
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getDouble(4),
-                        resultSet.getInt(5)
+                        resultSet.getString(5)
                 );
             }
 
@@ -113,7 +112,7 @@ public class ItemController implements ItemService {
                        resultSet.getString(2),
                        resultSet.getString(3),
                        resultSet.getDouble(4),
-                       resultSet.getInt(5)
+                       resultSet.getString(5)
                ));
            }
            return itemObservableList;
@@ -145,11 +144,7 @@ public class ItemController implements ItemService {
 
 
     }
-//
-//    @Override
-//    public boolean updateStock(List<OrderDetails> orderDetailsList) {
-//        return false;
-//    }
+
 
     @Override
     public ObservableList<String> getItemIds() {
@@ -162,27 +157,30 @@ public class ItemController implements ItemService {
     }
 
     @Override
-    public Item searchItemByName(String itemName) {
-        String SQL = "SELECT * FROM item WHERE itemName = ?";
+    public List<Item> searchItemsByNamePattern(String itemNamePart) {
+        String SQL = "SELECT * FROM item WHERE itemName LIKE ?";
 
+        List<Item> items = new ArrayList<>();
 
-        try{
-            Connection connection =  DBConnection.getInstance().getConnection();
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setString(1, itemName);
+            pstm.setString(1, itemNamePart + "%"); // Matches items starting with itemNamePart
             ResultSet rs = pstm.executeQuery();
-            if (rs.next()) {
-                return new Item(
+
+            while (rs.next()) {
+                items.add(new Item(
                         rs.getString("itemId"),
                         rs.getString("itemName"),
                         rs.getString("unitType"),
                         rs.getDouble("unitPrice"),
-                        rs.getInt("quantity")
-                );
+                        rs.getString("date")
+                ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return items;
     }
+
 }

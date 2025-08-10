@@ -3,7 +3,6 @@ package controller.supplier;
 import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Item;
 import model.Supplier;
 import util.CrudUtil;
 
@@ -11,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SupplierController implements SupplierService {
 
@@ -27,7 +28,7 @@ public class SupplierController implements SupplierService {
 
     @Override
     public boolean addSupplier(Supplier supplier) {
-        String SQL  = "INSERT INTO supplier VALUES(?,?,?,?)";
+        String SQL  = "INSERT INTO supplier VALUES(?,?,?,?,?)";
 
         try{
             return CrudUtil.execute(
@@ -35,6 +36,7 @@ public class SupplierController implements SupplierService {
                     supplier.getSupplierId(),
                     supplier.getSupplierName(),
                     supplier.getSupplierAddress(),
+                    supplier.getSupplierEmail(),
                     supplier.getContactNo()
             );
         }catch (SQLException e){
@@ -52,6 +54,7 @@ public class SupplierController implements SupplierService {
                     supplier.getSupplierName(),     // 1st placeholder
                     supplier.getSupplierAddress(),  // 2nd placeholder
                     supplier.getContactNo(),        // 3rd placeholder
+                    supplier.getSupplierEmail(),
                     supplier.getSupplierId()        // 4th placeholder (for WHERE clause)
             );
         } catch (SQLException e) {
@@ -82,7 +85,8 @@ public class SupplierController implements SupplierService {
                        resultSet.getString(1),
                        resultSet.getString(2),
                        resultSet.getString(3),
-                       resultSet.getString(4)
+                       resultSet.getString(4),
+                       resultSet.getString(5)
                );
            }
        } catch (SQLException e) {
@@ -102,7 +106,8 @@ public class SupplierController implements SupplierService {
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4)
+                        resultSet.getString(4),
+                        resultSet.getString(5)
                 ));
 
             }
@@ -148,28 +153,31 @@ public class SupplierController implements SupplierService {
     }
 
     @Override
-    public Supplier searchSupplierByName(String supplierName) {
-        String SQL = "SELECT * FROM supplier WHERE supplierName = ?";
+    public List<Supplier> searchSupplierByNamePattern(String supplierNamePart) {
+        String SQL = "SELECT * FROM supplier WHERE supplierName LIKE ?";
 
+        List<Supplier> suppliers = new ArrayList<>();
 
-        try{
-            Connection connection =  DBConnection.getInstance().getConnection();
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement pstm = connection.prepareStatement(SQL);
-            pstm.setString(1, supplierName);
+            pstm.setString(1, supplierNamePart + "%"); // starts with
             ResultSet rs = pstm.executeQuery();
-            if (rs.next()) {
-                return new Supplier(
+
+            while (rs.next()) {
+                suppliers.add(new Supplier(
                         rs.getString("supplierId"),
                         rs.getString("supplierName"),
                         rs.getString("supplierAddress"),
+                        rs.getString("supplierEmail"),
                         rs.getString("contactNo")
-
-                );
+                ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return suppliers;
     }
+
 
 }
