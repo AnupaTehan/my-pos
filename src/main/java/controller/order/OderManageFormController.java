@@ -52,6 +52,7 @@ import java.util.List;
 
 public class OderManageFormController  implements Initializable {
 
+    public TextField txtSupplierAddress;
     private ContextMenu suggestionsMenu = new ContextMenu();
 
     private ContextMenu itemSuggestionsMenu = new ContextMenu();
@@ -197,6 +198,7 @@ public class OderManageFormController  implements Initializable {
         String supplierId = cmbSupplierId.getValue().toString();
         String supplierName =txtSupplierName.getText();
         String supplierContact = txtSupplierContactNo.getText();
+        String supplierAddress = txtSupplierAddress.getText();
         String supplierEmail = txtSupplierEmail.getText();
 
         String netTotalText = lblNetTotal.getText();  // e.g. "RS. 21702.5"
@@ -222,14 +224,14 @@ public class OderManageFormController  implements Initializable {
 
 
 
-        Orders orders = new Orders(orderID,date,supplierId,supplierName,supplierContact,supplierEmail,netTotal,cartLists);
+        Orders orders = new Orders(orderID,date,supplierId,supplierName,supplierContact,supplierAddress,supplierEmail,netTotal,cartLists);
 
 
 
 
         if ( orderService.placeOrder(orders)){
             new Alert(Alert.AlertType.INFORMATION , "Order Placed successfully ").show();
-            createWordInvoice(orderID, date, supplierId, supplierName, supplierContact, supplierEmail, cartLists, netTotal);
+            createWordInvoice(orderID, date, supplierId, supplierName, supplierContact, supplierEmail,supplierAddress, cartLists, netTotal);
             tblOrder.getItems().clear();
             lblNetTotal.setText("Rs.0000");
             nextIdGenerator();
@@ -320,6 +322,7 @@ public class OderManageFormController  implements Initializable {
                 // Fill fields when user clicks suggestion
                 txtSupplierName.setText(supplier.getSupplierName());
                 txtSupplierContactNo.setText(supplier.getContactNo());
+                txtSupplierAddress.setText(supplier.getSupplierAddress());
                 cmbSupplierId.setValue(supplier.getSupplierId());
                 txtSupplierEmail.setText(supplier.getSupplierEmail());
             });
@@ -424,6 +427,7 @@ public class OderManageFormController  implements Initializable {
                                    String supplierName,
                                    String contactNo,
                                    String supplierEmail,
+                                   String supplierAddress,
                                    List<CartList> items,
                                    double netTotal) {
 
@@ -443,10 +447,22 @@ public class OderManageFormController  implements Initializable {
         try (XWPFDocument doc = new XWPFDocument();
              FileOutputStream out = new FileOutputStream(file)) {
 
+            // Company name paragraph
+            XWPFParagraph companyName = doc.createParagraph();
+            companyName.setAlignment(ParagraphAlignment.CENTER);
+            companyName.setSpacingAfter(20);
+
+            XWPFRun rCompany = companyName.createRun();
+            rCompany.setBold(true);
+            rCompany.setFontSize(14);
+            rCompany.setFontFamily("Calibri");
+            rCompany.setColor("000000");  // black color
+            rCompany.setText("UNIQUE INDUSTRIAL SOLUTIONS (PVT) LTD");
+
             // Title styling
             XWPFParagraph title = doc.createParagraph();
             title.setAlignment(ParagraphAlignment.CENTER);
-            title.setSpacingAfter(200); // space after title
+            title.setSpacingAfter(20); // space after title
             XWPFRun rTitle = title.createRun();
             rTitle.setBold(true);
             rTitle.setFontSize(20);
@@ -454,16 +470,27 @@ public class OderManageFormController  implements Initializable {
             rTitle.setColor("2E74B5");  // blue-ish color
             rTitle.setText("Purchase Order");
 
-            // Order & Supplier info paragraph
+            // Right-aligned paragraph ONLY for Order ID and Date
+            XWPFParagraph orderDatePara = doc.createParagraph();
+            orderDatePara.setAlignment(ParagraphAlignment.RIGHT);
+            XWPFRun rOrderDate = orderDatePara.createRun();
+            rOrderDate.setFontSize(11);
+            rOrderDate.setFontFamily("Calibri");
+            rOrderDate.setText("Order ID: " + orderId);
+            rOrderDate.addBreak();
+            rOrderDate.setText("Date: " + date);
+            rOrderDate.addBreak();
+            rOrderDate.addBreak();
+
+            // Left-aligned paragraph for supplier info (unchanged)
             XWPFParagraph info = doc.createParagraph();
             XWPFRun r = info.createRun();
             r.setFontSize(11);
             r.setFontFamily("Calibri");
-            r.setText("Order ID: " + orderId); r.addBreak();
-            r.setText("Date: " + date); r.addBreak();
             r.setText("Supplier ID: " + supplierId); r.addBreak();
             r.setText("Supplier Name: " + supplierName); r.addBreak();
             r.setText("Contact No: " + contactNo); r.addBreak();
+            r.setText("Supplier Address: " + supplierAddress); r.addBreak();
             r.setText("Email: " + supplierEmail); r.addBreak();
             r.addBreak();
 
@@ -552,6 +579,8 @@ public class OderManageFormController  implements Initializable {
 
         new Alert(Alert.AlertType.INFORMATION, "Invoice saved: " + file.getAbsolutePath()).show();
     }
+
+
 
 
 

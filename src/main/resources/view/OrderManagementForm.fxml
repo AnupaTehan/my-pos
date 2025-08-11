@@ -175,6 +175,7 @@
             <Font name="System Bold Italic" size="26.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierEmail" layoutX="51.0" layoutY="305.0" prefHeight="26.0" prefWidth="243.0" promptText="Supplier Eamil" />
+      <TextField fx:id="txtSupplierEmail" layoutX="51.0" layoutY="337.0" prefHeight="26.0" prefWidth="243.0" promptText="Supplier Eamil" />
+      <TextField fx:id="txtSupplierAddress" layoutX="51.0" layoutY="301.0" prefHeight="26.0" prefWidth="243.0" promptText="Supplier Address" />
    </children>
 </AnchorPane>
