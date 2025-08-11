@@ -2,6 +2,8 @@ package controller.order;
 
 import controller.supplier.SupplierController;
 import db.DBConnection;
+import model.Orders;
+import util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +25,7 @@ public class OrderController implements OrderService {
 
     @Override
     public String getNextOrderID() {
-        String SQL ="SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1 ";
+        String SQL = "SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1";
         try{
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement pstm = connection.prepareStatement(SQL);
@@ -55,5 +57,24 @@ public class OrderController implements OrderService {
     @Override
     public List<String> fetchItemNamesFromDatabase(String itemName) {
         return List.of();
+    }
+
+    @Override
+    public boolean placeOrder(Orders orders) {
+        String SQL = "INSERT INTO orders VALUE(?,?,?,?,?,?,?)";
+        try{
+            return CrudUtil.execute(
+                    SQL,
+                    orders.getOrderId(),
+                    orders.getOrderDate(),
+                    orders.getSupplierId(),
+                    orders.getSupplierName(),
+                    orders.getContactNo(),
+                    orders.getSupplierEmail(),
+                    orders.getNetTotal()
+            );
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import model.CartList;
 import model.Item;
+import model.Orders;
 import model.Supplier;
 
 import java.net.URL;
@@ -27,6 +28,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
+
+//use for connect with word pad
+
+// === imports you need ===
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblBorders;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.DecimalFormat;
+import java.util.List;
+
+
 
 
 
@@ -109,14 +129,15 @@ public class OderManageFormController  implements Initializable {
 
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
+
       colItemId.setCellValueFactory(new PropertyValueFactory<>("itemId"));
       colItemName.setCellValueFactory(new PropertyValueFactory<>("itemName"));
       colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
       colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
       colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
-
-      String itemCode = cmbItemId.getValue().toString();
+        String orderID = lblOrderID.getText();
+        String itemCode = cmbItemId.getValue().toString();
       String itemName = txtItemName.getText();
       String itemType = txtItemUniteType.getText();
       Double unitePrice = Double.parseDouble(txtUnitePrice.getText());
@@ -127,17 +148,13 @@ public class OderManageFormController  implements Initializable {
 
       boolean state = true;
 
-      if(Integer.parseInt(txtItemQuantity.getText())>Integer.parseInt(txtItemStock.getText())){
-          new Alert(Alert.AlertType.ERROR , "No Sufficient Sock Available").show();
-          state = false;
-          txtItemQuantity.setText(null);
-          txtItemQuantity.setPromptText("Quantity");
-      }
+
       if (state){
-          cartListObservableList.add(new CartList(itemCode,itemName,unitePrice,quantity,total));
+          cartListObservableList.add(new CartList(orderID,itemCode,itemName,unitePrice,quantity,total));
           tblOrder.setItems(cartListObservableList);
-          lblNetTotal.setText("RS ."+calculateTotal());
+          lblNetTotal.setText("RS. " + calculateTotal());
           clearItemFields();
+
       }
 
 
@@ -175,6 +192,53 @@ public class OderManageFormController  implements Initializable {
     @FXML
     void btnPlaceHolderOnAction(ActionEvent event) {
 
+    String orderID = lblOrderID.getText();
+        String date = lblDate.getText();
+        String supplierId = cmbSupplierId.getValue().toString();
+        String supplierName =txtSupplierName.getText();
+        String supplierContact = txtSupplierContactNo.getText();
+        String supplierEmail = txtSupplierEmail.getText();
+
+        String netTotalText = lblNetTotal.getText();  // e.g. "RS. 21702.5"
+        netTotalText = netTotalText.replace("RS.", "").trim();  // remove prefix
+        double netTotal = 0.0;
+        try {
+            netTotal = Double.parseDouble(netTotalText);
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Invalid net total value: " + netTotalText).show();
+            return;
+        }
+
+        List <CartList> cartLists = new ArrayList<>();
+
+        if (cartListObservableList.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Cart is empty").show();
+            return;
+        }
+
+        cartListObservableList.forEach(obj ->{
+            cartLists.add(new CartList(orderID,obj.getItemId(),obj.getItemName(),obj.getUnitPrice(),obj.getQuantity(), obj.getTotal()));
+        });
+
+
+
+        Orders orders = new Orders(orderID,date,supplierId,supplierName,supplierContact,supplierEmail,netTotal,cartLists);
+
+
+
+
+        if ( orderService.placeOrder(orders)){
+            new Alert(Alert.AlertType.INFORMATION , "Order Placed successfully ").show();
+            createWordInvoice(orderID, date, supplierId, supplierName, supplierContact, supplierEmail, cartLists, netTotal);
+            tblOrder.getItems().clear();
+            lblNetTotal.setText("Rs.0000");
+            nextIdGenerator();
+        }else{
+            new Alert(Alert.AlertType.ERROR,"Order could not be placed").show();
+        }
+
+
+
 
 
     }
@@ -189,20 +253,22 @@ public class OderManageFormController  implements Initializable {
         loadItemIDs();
 
         txtSupplierName.textProperty().addListener((obs, oldText, newText) -> {
-            if (newText.length() >= 1) { // start showing suggestions after typing 1 letter
+            if (newText != null && newText.length() >= 1) { // safe check
                 showSuggestions(newText);
             } else {
                 suggestionsMenu.hide();
             }
         });
 
+
         txtItemName.textProperty().addListener((obs, oldText, newText) -> {
-            if (newText.length() >= 1) { // start showing suggestions after 1 letter
+            if (newText != null && newText.length() >= 1) {
                 showItemSuggestions(newText);
             } else {
                 itemSuggestionsMenu.hide();
             }
         });
+
 
 
     }
@@ -334,7 +400,7 @@ public class OderManageFormController  implements Initializable {
         txtItemQuantity.setText(null);
         cmbItemId.setValue(null);
 
-        cmbItemId.setEditable(false);
+        cmbItemId.setEditable(true);
         cmbItemId.setPromptText("Select Item ID");
     }
 
@@ -343,9 +409,150 @@ public class OderManageFormController  implements Initializable {
         cmbSupplierId.setValue(null);
         txtSupplierName.setText(null);
         txtSupplierContactNo.setText(null);
-        cmbSupplierId.setEditable(false);
+        txtSupplierEmail.setText(null);
+        cmbSupplierId.setEditable(true);
         cmbSupplierId.setPromptText("Select Supplier ID");
     }
+
+
+
+    // for a connect with word document
+
+    private void createWordInvoice(String orderId,
+                                   String date,
+                                   String supplierId,
+                                   String supplierName,
+                                   String contactNo,
+                                   String supplierEmail,
+                                   List<CartList> items,
+                                   double netTotal) {
+
+        // ask the user where to save
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Invoice");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Word Document", "*.docx"));
+        fileChooser.setInitialFileName(orderId + "_invoice.docx");
+
+        // get stage from any control
+        Stage stage = (Stage) lblOrderID.getScene().getWindow();
+        File file = fileChooser.showSaveDialog(stage);
+        if (file == null) return; // user cancelled
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try (XWPFDocument doc = new XWPFDocument();
+             FileOutputStream out = new FileOutputStream(file)) {
+
+            // Title styling
+            XWPFParagraph title = doc.createParagraph();
+            title.setAlignment(ParagraphAlignment.CENTER);
+            title.setSpacingAfter(200); // space after title
+            XWPFRun rTitle = title.createRun();
+            rTitle.setBold(true);
+            rTitle.setFontSize(20);
+            rTitle.setFontFamily("Calibri");
+            rTitle.setColor("2E74B5");  // blue-ish color
+            rTitle.setText("Purchase Order");
+
+            // Order & Supplier info paragraph
+            XWPFParagraph info = doc.createParagraph();
+            XWPFRun r = info.createRun();
+            r.setFontSize(11);
+            r.setFontFamily("Calibri");
+            r.setText("Order ID: " + orderId); r.addBreak();
+            r.setText("Date: " + date); r.addBreak();
+            r.setText("Supplier ID: " + supplierId); r.addBreak();
+            r.setText("Supplier Name: " + supplierName); r.addBreak();
+            r.setText("Contact No: " + contactNo); r.addBreak();
+            r.setText("Email: " + supplierEmail); r.addBreak();
+            r.addBreak();
+
+            // Create items table
+            XWPFTable table = doc.createTable();
+
+            // Set table width to 100%
+            table.setWidth("100%");
+
+            // Header row (table initially has one row)
+            XWPFTableRow header = table.getRow(0);
+            header.getCell(0).setText("Item ID");
+            header.addNewTableCell().setText("Item Name");
+            header.addNewTableCell().setText("Quantity");
+            header.addNewTableCell().setText("Unit Price");
+            header.addNewTableCell().setText("Total");
+
+            // Style header cells: background color + white bold text
+            for (XWPFTableCell cell : header.getTableCells()) {
+                cell.setColor("4472C4");  // Dark blue background
+
+                for (XWPFParagraph p : cell.getParagraphs()) {
+                    for (XWPFRun run : p.getRuns()) {
+                        run.setBold(true);
+                        run.setColor("FFFFFF");  // White text
+                        run.setFontFamily("Calibri");
+                        run.setFontSize(12);
+                    }
+                }
+            }
+
+            // Add data rows with alternating row shading
+            boolean shade = false;
+            for (CartList it : items) {
+                XWPFTableRow row = table.createRow();
+
+                row.getCell(0).setText(it.getItemId() == null ? "" : it.getItemId());
+                row.getCell(1).setText(it.getItemName() == null ? "" : it.getItemName());
+                row.getCell(2).setText(String.valueOf(it.getQuantity()));
+                row.getCell(3).setText(df.format(it.getUnitPrice()));
+                row.getCell(4).setText(df.format(it.getTotal()));
+
+                if (shade) {
+                    for (XWPFTableCell cell : row.getTableCells()) {
+                        cell.setColor("D9E1F2");  // Light blue shading
+                    }
+                }
+                shade = !shade;
+            }
+
+            // Add table borders (solid lines)
+            CTTblBorders borders = table.getCTTbl().getTblPr().addNewTblBorders();
+            borders.addNewTop().setVal(STBorder.SINGLE);
+            borders.addNewBottom().setVal(STBorder.SINGLE);
+            borders.addNewLeft().setVal(STBorder.SINGLE);
+            borders.addNewRight().setVal(STBorder.SINGLE);
+            borders.addNewInsideH().setVal(STBorder.SINGLE);
+            borders.addNewInsideV().setVal(STBorder.SINGLE);
+
+            // Net total paragraph (right aligned, bold)
+            XWPFParagraph totalPara = doc.createParagraph();
+            totalPara.setAlignment(ParagraphAlignment.RIGHT);
+            XWPFRun rTotal = totalPara.createRun();
+            rTotal.setBold(true);
+            rTotal.setFontFamily("Calibri");
+            rTotal.setFontSize(14);
+            rTotal.setText("Net Total: Rs. " + df.format(netTotal));
+
+            // Write document to file
+            doc.write(out);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Could not save invoice: " + e.getMessage()).show();
+            return;
+        }
+
+        // Optionally open the file after creation (desktop must be supported)
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file);
+            }
+        } catch (Exception ex) {
+            // ignore if can't open — file is still saved.
+        }
+
+        new Alert(Alert.AlertType.INFORMATION, "Invoice saved: " + file.getAbsolutePath()).show();
+    }
+
 
 
 

@@ -10,10 +10,13 @@ import lombok.NoArgsConstructor;
 
 public class CartList {
 
+    private String orderId;
     private  String itemId;
     private String itemName;
     private Double unitPrice;
     private Integer quantity;
     private Double total;
+
+
 
 }

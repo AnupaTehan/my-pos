@@ -18,6 +18,7 @@ public class Orders {
  private String supplierName;
  private String contactNo;
  private String supplierEmail;
+ private Double netTotal;
 List <CartList> cartLists;
 
 }
