@@ -92,7 +92,7 @@
             </Rectangle>
             <TextField fx:id="txtSupplierName" layoutX="23.0" layoutY="268.0" prefHeight="35.0" prefWidth="330.0" promptText="Supplier Name" />
             <TextField fx:id="txtSearchSupplierByName" layoutX="410.0" layoutY="191.0" prefHeight="27.0" prefWidth="322.0" promptText="Search By Name" />
-            <TextField fx:id="SupplierName" layoutX="555.0" layoutY="270.0" prefHeight="26.0" prefWidth="302.0" />
+            <TextField fx:id="SupplierName" layoutX="555.0" layoutY="275.0" prefHeight="26.0" prefWidth="302.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cfcfcf" height="35.0" layoutX="248.0" layoutY="461.0" stroke="#cfcfcf" strokeType="INSIDE" width="102.0">
                <effect>
                   <Shadow>
@@ -146,23 +146,23 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </JFXButton>
-            <Label layoutX="404.0" layoutY="224.0" prefHeight="27.0" prefWidth="83.0" text="Supplier ID  " textFill="#767474">
+            <Label layoutX="404.0" layoutY="231.0" prefHeight="27.0" prefWidth="83.0" text="Supplier ID  " textFill="#767474">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="406.0" layoutY="259.0" prefHeight="27.0" prefWidth="102.0" text="Supplier Name  " textFill="#767474">
+            <Label layoutX="406.0" layoutY="275.0" prefHeight="27.0" prefWidth="102.0" text="Supplier Name  " textFill="#767474">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="406.0" layoutY="300.0" prefHeight="27.0" prefWidth="138.0" text="Supplier Addresses " textFill="#767474">
+            <Label layoutX="404.0" layoutY="321.0" prefHeight="27.0" prefWidth="138.0" text="Supplier Addresses " textFill="#767474">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="SupplierAddress" layoutX="554.0" layoutY="314.0" prefHeight="26.0" prefWidth="302.0" />
-            <Label layoutX="402.0" layoutY="404.0" prefHeight="27.0" prefWidth="138.0" text="Supplier Contact No" textFill="#767474">
+            <TextField fx:id="SupplierAddress" layoutX="554.0" layoutY="323.0" prefHeight="26.0" prefWidth="302.0" />
+            <Label layoutX="402.0" layoutY="412.0" prefHeight="27.0" prefWidth="138.0" text="Supplier Contact No" textFill="#767474">
                <font>
                   <Font size="14.0" />
                </font>
@@ -176,7 +176,7 @@
                   </Shadow>
                </effect>
             </Rectangle>
-            <TextField fx:id="SupplierContactNo" layoutX="554.0" layoutY="401.0" prefHeight="26.0" prefWidth="302.0" />
+            <TextField fx:id="SupplierContactNo" layoutX="554.0" layoutY="412.0" prefHeight="26.0" prefWidth="302.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b8babc" height="35.0" layoutX="642.0" layoutY="459.0" stroke="#c1bebe" strokeType="INSIDE" width="102.0">
                <effect>
                   <Shadow>
@@ -245,12 +245,12 @@
                </font>
             </Label>
             <TextField fx:id="txtSupplierEmail" layoutX="22.0" layoutY="369.0" prefHeight="35.0" prefWidth="330.0" promptText="Supplier Email" />
-            <Label layoutX="405.0" layoutY="345.0" prefHeight="27.0" prefWidth="138.0" text="Supplier Email" textFill="#767474">
+            <Label layoutX="404.0" layoutY="368.0" prefHeight="27.0" prefWidth="138.0" text="Supplier Email" textFill="#767474">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="supplierEmail" layoutX="554.0" layoutY="355.0" prefHeight="26.0" prefWidth="302.0" />
+            <TextField fx:id="supplierEmail" layoutX="554.0" layoutY="368.0" prefHeight="26.0" prefWidth="302.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="37.0" layoutX="693.0" layoutY="546.0" stroke="#fff1f1" strokeType="INSIDE" width="158.0">
                <effect>
                   <Shadow height="20.42" radius="8.685" width="16.32">
