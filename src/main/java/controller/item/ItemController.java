@@ -122,28 +122,27 @@ public class ItemController implements ItemService {
     }
 
     @Override
-    public String getNextItemId() {
-        String SQL ="SELECT itemId FROM item ORDER BY itemId DESC LIMIT 1 ";
-        try{
+    public String getNextItemId(String prefix) {
+        String SQL = "SELECT itemId FROM item WHERE itemId LIKE ? ORDER BY itemId DESC LIMIT 1";
+        try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement pstm = connection.prepareStatement(SQL);
-            ResultSet resultSet = pstm.executeQuery();
-            String lastID ="";
+            pstm.setString(1, prefix + "%");
 
-            if (resultSet.next()){
-                lastID = resultSet.getString("itemId");
-            }else{
-                lastID = "I000";
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                String lastId = rs.getString("itemId");
+                int lastNum = Integer.parseInt(lastId.substring(prefix.length()));
+                lastNum++;
+                return prefix + String.format("%04d", lastNum);
+            } else {
+                return prefix + "0001";
             }
-            return lastID;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-
     }
+
 
 
     @Override

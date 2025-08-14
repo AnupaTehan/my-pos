@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -16,6 +17,24 @@
 
 <AnchorPane prefHeight="736.0" prefWidth="887.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.item.ItemManageFormController">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="733.0" layoutY="451.0" stroke="#fff1f1" strokeType="INSIDE" width="114.0">
+         <effect>
+            <Shadow height="20.42" radius="8.685" width="16.32">
+               <color>
+                  <Color red="0.6947368383407593" green="0.6535672545433044" blue="0.6535672545433044" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="733.0" layoutY="450.0" stroke="#fff1f1" strokeType="INSIDE" width="114.0">
+         <effect>
+            <Shadow height="20.42" radius="8.685" width="16.32">
+               <color>
+                  <Color red="0.6947368383407593" green="0.6535672545433044" blue="0.6535672545433044" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0e3457" height="65.0" layoutX="-1.0" layoutY="4.0" stroke="BLACK" strokeType="INSIDE" width="887.0" />
       <Label alignment="CENTER" layoutX="182.0" prefHeight="72.0" prefWidth="540.0" text="Item Management" textFill="WHITE">
          <font>
@@ -31,8 +50,8 @@
             </Shadow>
          </effect>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="319.0" layoutX="16.0" layoutY="99.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="350.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="66.0" layoutY="108.0" stroke="#767474" strokeType="INSIDE" strokeWidth="0.0" width="280.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="349.0" layoutX="1.0" layoutY="69.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="373.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="66.0" layoutY="84.0" stroke="#767474" strokeType="INSIDE" strokeWidth="0.0" width="280.0">
          <effect>
             <Shadow>
                <color>
@@ -61,7 +80,7 @@
          </effect>
       </Rectangle>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="288.0" layoutX="19.0" layoutY="432.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="847.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="70.0" layoutY="108.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="273.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="70.0" layoutY="85.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="273.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="430.0" layoutY="110.0" stroke="#767474" strokeType="INSIDE" strokeWidth="0.0" width="386.0">
          <effect>
             <Shadow>
@@ -72,7 +91,7 @@
          </effect>
       </Rectangle>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="434.0" layoutY="108.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="380.0" />
-      <Label alignment="CENTER" layoutX="86.0" layoutY="108.0" prefHeight="12.0" prefWidth="241.0" text="Add New Item" textFill="#767474">
+      <Label alignment="CENTER" layoutX="84.0" layoutY="87.0" prefHeight="12.0" prefWidth="241.0" text="Add New Item" textFill="#767474">
          <font>
             <Font name="Dubai Bold" size="20.0" />
          </font>
@@ -97,21 +116,8 @@
             </Shadow>
          </effect>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="740.0" layoutY="451.0" stroke="#fff1f1" strokeType="INSIDE" width="114.0">
-         <effect>
-            <Shadow height="20.42" radius="8.685" width="16.32">
-               <color>
-                  <Color red="0.6947368383407593" green="0.6535672545433044" blue="0.6535672545433044" />
-               </color>
-            </Shadow>
-         </effect>
-      </Rectangle>
+      <Group layoutX="581.0" layoutY="443.0" />
       <JFXButton layoutX="249.0" layoutY="373.0" onAction="#btnAddItemOnAction" prefHeight="35.0" prefWidth="101.0" style="-fx-background-color: #ffffff;" text="Add Item" textFill="#767474">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </JFXButton>
-      <JFXButton layoutX="740.0" layoutY="448.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: #ffffff;" styleClass="dashboard-colour2" stylesheets="@../css/Table.css" text="Refresh" textFill="#767474">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -200,10 +206,10 @@
             <TableColumn fx:id="colItemName" prefWidth="188.0" text="ItemName" />
             <TableColumn fx:id="colItemType" prefWidth="129.0" text="Item Type" />
             <TableColumn fx:id="colItemUnitPrice" prefWidth="255.0" text="Item Unite Price" />
-            <TableColumn fx:id="colItemDate" prefWidth="154.0" text="Quantity" />
+            <TableColumn fx:id="colItemDate" prefWidth="154.0" text="Date " />
          </columns>
       </TableView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="29.0" layoutY="110.0" stroke="#767474" strokeType="INSIDE" strokeWidth="0.0" width="35.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="9.0" layoutY="84.0" stroke="#767474" strokeType="INSIDE" strokeWidth="0.0" width="35.0">
          <effect>
             <Shadow>
                <color>
@@ -212,13 +218,13 @@
             </Shadow>
          </effect>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="31.0" layoutY="109.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="35.0" />
-      <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="35.0" layoutY="110.0" onMouseClicked="#homeMouseOnClick" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#767474" height="35.0" layoutX="13.0" layoutY="82.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="35.0" />
+      <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="17.0" layoutY="83.0" onMouseClicked="#homeMouseOnClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/home.png" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="33.0" layoutY="451.0" stroke="#fff1f1" strokeType="INSIDE" width="688.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="33.0" layoutY="451.0" stroke="#fff1f1" strokeType="INSIDE" width="540.0">
          <effect>
             <Shadow radius="11.754999999999999" width="28.02">
                <color>
@@ -227,8 +233,8 @@
             </Shadow>
          </effect>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="34.0" layoutY="448.0" stroke="WHITE" strokeType="INSIDE" width="688.0" />
-      <Label alignment="CENTER" layoutX="277.0" layoutY="448.0" prefHeight="12.0" prefWidth="241.0" text="View Items" textFill="#767474">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="34.0" layoutY="448.0" stroke="WHITE" strokeType="INSIDE" width="532.0" />
+      <Label alignment="CENTER" layoutX="171.0" layoutY="448.0" prefHeight="12.0" prefWidth="241.0" text="View Items" textFill="#767474">
          <font>
             <Font name="Dubai Bold" size="20.0" />
          </font>
@@ -241,5 +247,34 @@
       </Label>
       <ComboBox fx:id="itemUnitType" layoutX="572.0" layoutY="275.0" prefHeight="26.0" prefWidth="273.0" promptText="Item Type" />
       <TextField fx:id="itemDate" layoutX="570.0" layoutY="344.0" prefHeight="26.0" prefWidth="273.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="727.0" layoutY="447.0" stroke="#fff1f1" strokeType="INSIDE" width="114.0">
+         <effect>
+            <Shadow height="20.42" radius="8.685" width="16.32">
+               <color>
+                  <Color red="0.6947368383407593" green="0.6535672545433044" blue="0.6535672545433044" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="584.0" layoutY="448.0" stroke="#fff1f1" strokeType="INSIDE" width="114.0">
+         <effect>
+            <Shadow height="20.42" radius="8.685" width="16.32">
+               <color>
+                  <Color red="0.6947368383407593" green="0.6535672545433044" blue="0.6535672545433044" />
+               </color>
+            </Shadow>
+         </effect>
+      </Rectangle>
+      <JFXButton layoutX="583.0" layoutY="448.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: #ffffff;" styleClass="dashboard-colour2" stylesheets="@../css/Table.css" text="Refresh" textFill="#767474">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="728.0" layoutY="448.0" onAction="#btnExportOnAction" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: #ffffff;" styleClass="dashboard-colour2" stylesheets="@../css/Table.css" text="Export" textFill="#767474">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <ComboBox fx:id="cmdItemCodeType" layoutX="31.0" layoutY="139.0" prefHeight="26.0" prefWidth="322.0" promptText="Item Type" />
    </children>
 </AnchorPane>

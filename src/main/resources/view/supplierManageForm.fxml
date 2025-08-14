@@ -50,7 +50,7 @@
             </Rectangle>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="12.0" layoutY="436.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="856.0" />
             <Group layoutX="78.0" layoutY="78.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="25.0" layoutY="456.0" stroke="#fff1f1" strokeType="INSIDE" width="655.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="25.0" layoutY="456.0" stroke="#fff1f1" strokeType="INSIDE" width="479.0">
                <effect>
                   <Shadow radius="11.754999999999999" width="28.02">
                      <color>
@@ -59,7 +59,7 @@
                   </Shadow>
                </effect>
             </Rectangle>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="26.0" layoutY="453.0" stroke="WHITE" strokeType="INSIDE" width="652.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="35.0" layoutX="26.0" layoutY="453.0" stroke="WHITE" strokeType="INSIDE" width="474.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d1d1d1" height="35.0" layoutX="408.0" layoutY="79.0" stroke="#c7c4c4" strokeType="INSIDE" width="452.0">
                <effect>
                   <Shadow>
@@ -75,7 +75,7 @@
                   <Font name="Dubai Bold" size="20.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="233.0" layoutY="453.0" prefHeight="12.0" prefWidth="241.0" text="View Suppliers" textFill="#767474">
+            <Label alignment="CENTER" layoutX="144.0" layoutY="453.0" prefHeight="12.0" prefWidth="241.0" text="View Suppliers" textFill="#767474">
                <font>
                   <Font name="Dubai Bold" size="20.0" />
                </font>
@@ -118,7 +118,7 @@
                </effect>
 
             </JFXButton>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="37.0" layoutX="696.0" layoutY="454.0" stroke="#fff1f1" strokeType="INSIDE" width="158.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="37.0" layoutX="519.0" layoutY="455.0" stroke="#fff1f1" strokeType="INSIDE" width="158.0">
                <effect>
                   <Shadow height="20.42" radius="8.685" width="16.32">
                      <color>
@@ -136,7 +136,7 @@
                   </Shadow>
                </effect>
             </Rectangle>
-            <JFXButton layoutX="700.0" layoutY="453.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="151.0" style="-fx-background-color: #ffffff;" text="Refresh" textFill="#767474">
+            <JFXButton layoutX="529.0" layoutY="456.0" onAction="#btnRefreshOnAction" prefHeight="35.0" prefWidth="151.0" style="-fx-background-color: #ffffff;" text="Refresh" textFill="#767474">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -251,6 +251,20 @@
                </font>
             </Label>
             <TextField fx:id="supplierEmail" layoutX="554.0" layoutY="279.0" prefHeight="26.0" prefWidth="302.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="37.0" layoutX="693.0" layoutY="455.0" stroke="#fff1f1" strokeType="INSIDE" width="158.0">
+               <effect>
+                  <Shadow height="20.42" radius="8.685" width="16.32">
+                     <color>
+                        <Color red="0.6947368383407593" green="0.6535672545433044" blue="0.6535672545433044" />
+                     </color>
+                  </Shadow>
+               </effect>
+            </Rectangle>
+            <JFXButton layoutX="697.0" layoutY="457.0" onAction="#btnExportOnAction" prefHeight="35.0" prefWidth="151.0" style="-fx-background-color: #ffffff;" text="Export" textFill="#767474">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
          </children>
       </Group>
    </children>

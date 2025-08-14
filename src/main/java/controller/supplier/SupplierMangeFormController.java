@@ -7,9 +7,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import model.Item;
 import model.Supplier;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.IOUtils;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import single.DashBoardForm;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -234,4 +245,137 @@ public class SupplierMangeFormController implements Initializable {
 
         nextIdGenerated();
     }
+
+    public void btnExportOnAction(ActionEvent actionEvent) {
+
+        try {
+            // Get all items
+            ObservableList<Supplier> suppliers = supplierService.getAll();
+            if (suppliers.isEmpty()) {
+                new Alert(Alert.AlertType.WARNING, "No supplier to export!").show();
+                return;
+            }
+
+            // Ask user for save location
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Excel File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+            fileChooser.setInitialFileName("supplier.xlsx");
+            File file = fileChooser.showSaveDialog(tblSupplier.getScene().getWindow());
+            if (file == null) return;
+
+            // Create workbook and sheet
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Suppliers");
+
+            // === Insert PNG Logo with smaller size ===
+            InputStream logoInput = new FileInputStream("D:\\chathuranga_project\\src\\main\\resources\\img\\logo.png");
+            byte[] logoBytes = IOUtils.toByteArray(logoInput);
+            logoInput.close();
+
+            int pictureIdx = workbook.addPicture(logoBytes, Workbook.PICTURE_TYPE_PNG);
+            CreationHelper helper = workbook.getCreationHelper();
+            Drawing<?> drawing = sheet.createDrawingPatriarch();
+            ClientAnchor anchor = helper.createClientAnchor();
+
+            anchor.setCol1(0); // Start column
+            anchor.setRow1(0); // Start row
+            anchor.setCol2(2); // End column (smaller width)
+            anchor.setRow2(6); // End row (smaller height)
+            anchor.setDx1(50); // Horizontal offset
+            anchor.setDy1(100);  // Vertical offset
+
+            Picture pict = drawing.createPicture(anchor, pictureIdx);
+            pict.resize(0.5); // Resize proportionally to fit smaller space
+
+            // === "ITEM LIST" Title with spacing below logo ===
+            CellStyle titleStyle = workbook.createCellStyle();
+            Font titleFont = workbook.createFont();
+            titleFont.setBold(true);
+            titleFont.setFontHeightInPoints((short) 16);
+            titleFont.setColor(IndexedColors.WHITE.getIndex());
+            titleStyle.setFont(titleFont);
+            titleStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+            titleStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            titleStyle.setAlignment(HorizontalAlignment.CENTER);
+            titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
+            // Merge cells for title next to logo
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 3, 8)); // Title starts at column 3
+            Row titleRow = sheet.createRow(0);
+            org.apache.poi.ss.usermodel.Cell titleCell = titleRow.createCell(3);
+            titleCell.setCellValue("SUPPLIER LIST");
+            titleCell.setCellStyle(titleStyle);
+
+            // Add empty row for spacing between title and table
+            sheet.createRow(3);
+
+            // === Table Header Style ===
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerFont.setColor(IndexedColors.WHITE.getIndex());
+            headerStyle.setFont(headerFont);
+            headerStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            headerStyle.setBorderBottom(BorderStyle.THIN);
+            headerStyle.setBorderTop(BorderStyle.THIN);
+            headerStyle.setBorderLeft(BorderStyle.THIN);
+            headerStyle.setBorderRight(BorderStyle.THIN);
+            headerStyle.setAlignment(HorizontalAlignment.CENTER);
+
+            String[] columns = {"Supplier ID", "Supplier Name", "Supplier Address", "Supplier Email", "Contact No"};
+
+            // Header row below spacing
+            int headerRowIndex = 4;
+            Row headerRow = sheet.createRow(headerRowIndex);
+            for (int i = 0; i < columns.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(columns[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            // === Table Body Style ===
+            CellStyle bodyStyle = workbook.createCellStyle();
+            bodyStyle.setBorderBottom(BorderStyle.THIN);
+            bodyStyle.setBorderTop(BorderStyle.THIN);
+            bodyStyle.setBorderLeft(BorderStyle.THIN);
+            bodyStyle.setBorderRight(BorderStyle.THIN);
+
+            // Fill table data
+            int rowNum = headerRowIndex + 1;
+            for (Supplier supplier : suppliers) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(supplier.getSupplierId());
+                row.createCell(1).setCellValue(supplier.getSupplierName());
+                row.createCell(2).setCellValue(supplier.getSupplierAddress());
+                row.createCell(3).setCellValue(supplier.getSupplierEmail());
+                row.createCell(4).setCellValue(supplier.getContactNo());
+
+                for (int i = 0; i < columns.length; i++) {
+                    row.getCell(i).setCellStyle(bodyStyle);
+                }
+            }
+
+            // === Set Column Widths ===
+            sheet.setColumnWidth(0, 13000);
+            sheet.setColumnWidth(1, 10000);
+            sheet.setColumnWidth(2, 7000);
+            sheet.setColumnWidth(3, 7000);
+            sheet.setColumnWidth(4, 8000);
+
+            // Save file
+            try (FileOutputStream fileOut = new FileOutputStream(file)) {
+                workbook.write(fileOut);
+            }
+            workbook.close();
+
+            new Alert(Alert.AlertType.INFORMATION, "Excel exported with style!").show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error: " + e.getMessage()).show();
+        }
+    }
 }
+

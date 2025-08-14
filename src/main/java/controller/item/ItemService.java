@@ -18,7 +18,7 @@ public interface ItemService {
 
     ObservableList<Item> getAll();
 
-    String getNextItemId();
+    String getNextItemId(String prefix);
 
     ObservableList<String>getItemIds();
 
