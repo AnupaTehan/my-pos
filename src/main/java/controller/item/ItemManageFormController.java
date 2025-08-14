@@ -232,6 +232,8 @@ public class ItemManageFormController implements Initializable {
 
         loadTable();
 
+        setupArrowKeyNavigationForItemForm();
+
 
         txtItemDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     }
@@ -246,6 +248,82 @@ public class ItemManageFormController implements Initializable {
             tblItem.setItems(itemObservableList);
         }
     }
+
+    private void setupArrowKeyNavigationForItemForm() {
+        // txtItemId
+        txtItemId.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    txtItemName.requestFocus();
+                    break;
+                case UP:
+                case LEFT:
+                    txtItemDate.requestFocus(); // wrap-around
+                    break;
+            }
+        });
+
+        // txtItemName
+        txtItemName.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    cmdItemType.requestFocus();
+                    break;
+                case UP:
+                case LEFT:
+                    txtItemId.requestFocus();
+                    break;
+            }
+        });
+
+        // cmdItemType
+        cmdItemType.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    txtItemUnitPrice.requestFocus();
+                    break;
+                case UP:
+                case LEFT:
+                    txtItemName.requestFocus();
+                    break;
+            }
+        });
+
+        // txtItemUnitPrice
+        txtItemUnitPrice.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    txtItemDate.requestFocus();
+                    break;
+                case UP:
+                case LEFT:
+                    cmdItemType.requestFocus();
+                    break;
+            }
+        });
+
+        // txtItemDate
+        txtItemDate.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    txtItemId.requestFocus(); // wrap-around
+                    break;
+                case UP:
+                case LEFT:
+                    txtItemUnitPrice.requestFocus();
+                    break;
+                case ENTER:
+                    btnAddItemOnAction(new ActionEvent()); // Add item on Enter
+                    break;
+            }
+        });
+    }
+
 
 
     private void setupItemCodeTypeDropdown() {

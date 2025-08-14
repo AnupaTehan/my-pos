@@ -261,7 +261,85 @@ public class SupplierMangeFormController implements Initializable {
         loadTable();
 
         nextIdGenerated();
+
+        setupArrowKeyNavigation();
     }
+
+    private void setupArrowKeyNavigation() {
+        // txtSupplierId
+        txtSupplierId.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    txtSupplierName.requestFocus();
+                    break;
+                case UP:
+                case LEFT:
+                    txtSupplierContactNo.requestFocus(); // wrap-around
+                    break;
+            }
+        });
+
+        // txtSupplierName
+        txtSupplierName.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    txtSupplierAddress.requestFocus();
+                    break;
+                case UP:
+                case LEFT:
+                    txtSupplierId.requestFocus();
+                    break;
+            }
+        });
+
+        // txtSupplierAddress
+        txtSupplierAddress.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    txtSupplierEmail.requestFocus();
+                    break;
+                case UP:
+                case LEFT:
+                    txtSupplierName.requestFocus();
+                    break;
+            }
+        });
+
+        // txtSupplierEmail
+        txtSupplierEmail.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    txtSupplierContactNo.requestFocus();
+                    break;
+                case UP:
+                case LEFT:
+                    txtSupplierAddress.requestFocus();
+                    break;
+            }
+        });
+
+        // txtSupplierContactNo
+        txtSupplierContactNo.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case DOWN:
+                case RIGHT:
+                    txtSupplierId.requestFocus(); // wrap-around
+                    break;
+                case UP:
+                case LEFT:
+                    txtSupplierEmail.requestFocus();
+                    break;
+                case ENTER:
+                    btnAddSupplierOnAction(new ActionEvent()); // Add supplier on Enter
+                    break;
+            }
+        });
+    }
+
 
     public void btnExportOnAction(ActionEvent actionEvent) {
 
