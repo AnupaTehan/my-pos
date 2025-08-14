@@ -352,24 +352,32 @@ public class OderManageFormController  implements Initializable {
     }
 
     private void nextIdGenerator() {
-        String lastId = orderService.getNextOrderID(); // e.g., "PO01"
+        String lastId = orderService.getNextOrderID(); // e.g., "PO01", "PO99", etc.
 
         if (lastId != null && lastId.startsWith("PO")) {
-            String numericPart = lastId.substring(2); // e.g., "01"
-            int idNum = Integer.parseInt(numericPart); // parse -> 1
-            int nextId = idNum + 1; // increment -> 2
+            try {
+                // Extract numeric part after "PO"
+                String numericPart = lastId.substring(2);
+                int idNum = Integer.parseInt(numericPart);
 
-            String newId = String.format("PO%02d", nextId); // format -> "PO02"
+                // Increment number
+                int nextId = idNum + 1;
 
-            lblOrderID.setText(newId);
+                // Format with dynamic zero padding (minimum 2 digits, grows if needed)
+                String newId = String.format("PO%0" + Math.max(2, String.valueOf(nextId).length()) + "d", nextId);
 
+                lblOrderID.setText(newId);
+
+            } catch (NumberFormatException e) {
+                // If parsing fails, start fresh
+                lblOrderID.setText("PO01");
+            }
         } else {
-            // If no ID is found or invalid, start from "PO01"
-
+            // If no ID is found, start from PO01
             lblOrderID.setText("PO01");
-
         }
     }
+
 
 
     private void loadDateAndTime() {

@@ -133,8 +133,12 @@ public class ItemController implements ItemService {
             if (rs.next()) {
                 String lastId = rs.getString("itemId");
                 int lastNum = Integer.parseInt(lastId.substring(prefix.length()));
-                lastNum++;
-                return prefix + String.format("%04d", lastNum);
+                int nextNum = lastNum + 1;
+
+                // Dynamically adjust zero padding (minimum 4 digits, grows automatically)
+                String newId = prefix + String.format("%0" + Math.max(4, String.valueOf(nextNum).length()) + "d", nextNum);
+                return newId;
+
             } else {
                 return prefix + "0001";
             }
@@ -142,6 +146,7 @@ public class ItemController implements ItemService {
             throw new RuntimeException(e);
         }
     }
+
 
 
 

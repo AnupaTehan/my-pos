@@ -27,11 +27,15 @@ import java.util.ResourceBundle;
 
 public class SupplierMangeFormController implements Initializable {
 
-    public TableColumn colSupplierEmail;
+    @FXML
+    private TableColumn colSupplierEmail;
 
-    public TextField txtSupplierEmail;
+    @FXML
+    private TextField txtSupplierEmail;
 
-    public TextField supplierEmail;
+    @FXML
+    private TextField supplierEmail;
+
     @FXML
     private TextField SupplierAddress;
 
@@ -204,20 +208,33 @@ public class SupplierMangeFormController implements Initializable {
     }
 
     public void nextIdGenerated() {
-        String lastId = supplierService.getNextSupplierId(); // e.g., "S001"
+        String lastId = supplierService.getNextSupplierId(); // e.g., "SUP001", "SUP999", etc.
 
-        if (lastId != null && lastId.startsWith("S")) {
-            String numericPart = lastId.substring(1); // e.g., "001"
-            int idNum = Integer.parseInt(numericPart); // parse "001" -> 1
-            int nextId = idNum + 1; // increment -> 2
+        if (lastId != null && lastId.startsWith("SUP")) {
+            try {
+                // Extract numeric part after "SUP" (first 3 characters)
+                String numericPart = lastId.substring(3);
+                int idNum = Integer.parseInt(numericPart);
 
-            String newId = String.format("S%03d", nextId); // format -> "S002"
-            txtSupplierId.setText(newId);
+                // Increment number
+                int nextId = idNum + 1;
+
+                // Format with leading zeros (minimum 3 digits, grows automatically)
+                String newId = String.format("SUP%0" + Math.max(3, String.valueOf(nextId).length()) + "d", nextId);
+
+                txtSupplierId.setText(newId);
+
+            } catch (NumberFormatException e) {
+                // If parsing fails, start fresh
+                txtSupplierId.setText("SUP001");
+            }
         } else {
-            // If no ID is found or invalid, start from "S001"
-            txtSupplierId.setText("S001");
+            // If no ID is found, start from SUP001
+            txtSupplierId.setText("SUP001");
         }
     }
+
+
 
     public void loadTable(){
         ObservableList<Supplier> supplierObservableList = supplierService.getAll();

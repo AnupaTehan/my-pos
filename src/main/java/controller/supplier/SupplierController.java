@@ -131,7 +131,7 @@ public class SupplierController implements SupplierService {
             if (resultSet.next()){
                 lastID = resultSet.getString("supplierId");
             }else{
-                lastID = "S000";
+                lastID = "SUP000";
             }
             return lastID;
 
