@@ -3,7 +3,6 @@ package controller.order;
 import com.jfoenix.controls.JFXTextField;
 import controller.item.ItemController;
 import controller.supplier.SupplierController;
-import controller.supplier.SupplierService;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,189 +21,140 @@ import model.Orders;
 import model.Supplier;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-
-
-//use for connect with word pad
-
-// === imports you need ===
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import org.apache.poi.util.Units;
-import org.apache.poi.xwpf.usermodel.*;
-import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblBorders;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
-
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.text.DecimalFormat;
-import java.util.List;
+import java.awt.Desktop;
 
+// === Apache POI imports ===
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
-
-
-
-public class OderManageFormController  implements Initializable {
-
-    public TextField txtSupplierAddress;
-    private ContextMenu suggestionsMenu = new ContextMenu();
-
-    private ContextMenu itemSuggestionsMenu = new ContextMenu();
-
+public class OderManageFormController implements Initializable {
 
     @FXML
     private Label lblOrderID;
-
-    @FXML
-    private TextField txtSupplierEmail;
-
-    @FXML
-    private ComboBox cmbItemId;
-
-    @FXML
-    private ComboBox cmbSupplierId;
-
-    @FXML
-    private TableColumn colItemId;
-
-    @FXML
-    private TableColumn colItemName;
-
-    @FXML
-    private TableColumn colItemType;
-
-    @FXML
-    private TableColumn colQuantity;
-
-    @FXML
-    private TableColumn colTotal;
-
-    @FXML
-    private TableColumn colUnitPrice;
-
     @FXML
     private Label lblDate;
-
     @FXML
     private Label lblNetTotal;
-
     @FXML
     private Label lblTime;
 
     @FXML
-    private TableView tblOrder;
-
+    private TextField txtSupplierAddress;
     @FXML
-    private TextField txtItemName;
-
-    @FXML
-    private TextField txtItemStock;
-
-    @FXML
-    private TextField txtItemUniteType;
-
-    @FXML
-    private JFXTextField txtOrderID;
-
+    private TextField txtSupplierEmail;
     @FXML
     private TextField txtSupplierContactNo;
-
     @FXML
     private TextField txtSupplierName;
 
     @FXML
-    private TextField txtUnitePrice;
+    private ComboBox cmbSupplierId;
+    @FXML
+    private ComboBox cmbItemId;
 
+    @FXML
+    private TextField txtItemName;
+    @FXML
+    private TextField txtItemStock;
+    @FXML
+    private TextField txtItemUniteType;
+    @FXML
+    private TextField txtUnitePrice;
     @FXML
     private TextField txtItemQuantity;
 
-    OrderService orderService = OrderController.getInstance();
+    @FXML
+    private TableView tblOrder;
+    @FXML
+    private TableColumn colItemId;
+    @FXML
+    private TableColumn colItemName;
+    @FXML
+    private TableColumn colItemType;
+    @FXML
+    private TableColumn colQuantity;
+    @FXML
+    private TableColumn colTotal;
+    @FXML
+    private TableColumn colUnitPrice;
 
-    ObservableList <CartList> cartListObservableList = FXCollections.observableArrayList();
+    @FXML
+    private JFXTextField txtOrderID;
+
+    OrderService orderService = OrderController.getInstance();
+    ObservableList<CartList> cartListObservableList = FXCollections.observableArrayList();
+    private ContextMenu suggestionsMenu = new ContextMenu();
+    private ContextMenu itemSuggestionsMenu = new ContextMenu();
 
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
-
-      colItemId.setCellValueFactory(new PropertyValueFactory<>("itemId"));
-      colItemName.setCellValueFactory(new PropertyValueFactory<>("itemName"));
-      colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-      colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-      colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+        colItemId.setCellValueFactory(new PropertyValueFactory<>("itemId"));
+        colItemName.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         String orderID = lblOrderID.getText();
         String itemCode = cmbItemId.getValue().toString();
-      String itemName = txtItemName.getText();
-      String itemType = txtItemUniteType.getText();
-      Double unitePrice = Double.parseDouble(txtUnitePrice.getText());
-      Integer quantity = Integer.parseInt(txtItemQuantity.getText());
-      Double total = unitePrice*quantity;
+        String itemName = txtItemName.getText();
+        String itemType = txtItemUniteType.getText();
+        Double unitePrice = Double.parseDouble(txtUnitePrice.getText());
+        Integer quantity = Integer.parseInt(txtItemQuantity.getText());
+        Double total = unitePrice * quantity;
 
-
-
-      boolean state = true;
-
-
-      if (state){
-          cartListObservableList.add(new CartList(orderID,itemCode,itemName,unitePrice,quantity,total));
-          tblOrder.setItems(cartListObservableList);
-          lblNetTotal.setText("RS. " + calculateTotal());
-          clearItemFields();
-
-      }
-
-
-
+        cartListObservableList.add(new CartList(orderID, itemCode, itemName, unitePrice, quantity, total));
+        tblOrder.setItems(cartListObservableList);
+        lblNetTotal.setText("RS. " + calculateTotal());
+        clearItemFields();
     }
 
     private Double calculateTotal() {
         Double netTotal = 0.0;
-        for(CartList cartList : cartListObservableList){
-            netTotal =  netTotal + cartList.getTotal();
+        for (CartList cartList : cartListObservableList) {
+            netTotal += cartList.getTotal();
         }
-        return  netTotal;
+        return netTotal;
     }
 
     @FXML
     void btnClearFieldOnAction(ActionEvent event) {
         clearSupplierFields();
         clearItemFields();
-
-
-
-
-
-
-
     }
 
     @FXML
     void btnClearTableOnAction(ActionEvent event) {
         tblOrder.getItems().clear();
         lblNetTotal.setText("Rs.0000");
-
     }
 
     @FXML
     void btnPlaceHolderOnAction(ActionEvent event) {
-
-    String orderID = lblOrderID.getText();
+        String orderID = lblOrderID.getText();
         String date = lblDate.getText();
         String supplierId = cmbSupplierId.getValue().toString();
-        String supplierName =txtSupplierName.getText();
+        String supplierName = txtSupplierName.getText();
         String supplierContact = txtSupplierContactNo.getText();
         String supplierAddress = txtSupplierAddress.getText();
         String supplierEmail = txtSupplierEmail.getText();
 
-        String netTotalText = lblNetTotal.getText();  // e.g. "RS. 21702.5"
-        netTotalText = netTotalText.replace("RS.", "").trim();  // remove prefix
+        String netTotalText = lblNetTotal.getText().replace("RS.", "").trim();
         double netTotal = 0.0;
         try {
             netTotal = Double.parseDouble(netTotalText);
@@ -213,41 +163,28 @@ public class OderManageFormController  implements Initializable {
             return;
         }
 
-        List <CartList> cartLists = new ArrayList<>();
-
         if (cartListObservableList.isEmpty()) {
             new Alert(Alert.AlertType.WARNING, "Cart is empty").show();
             return;
         }
 
-        cartListObservableList.forEach(obj ->{
-            cartLists.add(new CartList(orderID,obj.getItemId(),obj.getItemName(),obj.getUnitPrice(),obj.getQuantity(), obj.getTotal()));
+        List<CartList> cartLists = new ArrayList<>();
+        cartListObservableList.forEach(obj -> {
+            cartLists.add(new CartList(orderID, obj.getItemId(), obj.getItemName(), obj.getUnitPrice(), obj.getQuantity(), obj.getTotal()));
         });
 
+        Orders orders = new Orders(orderID, date, supplierId, supplierName, supplierContact, supplierAddress, supplierEmail, netTotal, cartLists);
 
-
-        Orders orders = new Orders(orderID,date,supplierId,supplierName,supplierContact,supplierAddress,supplierEmail,netTotal,cartLists);
-
-
-
-
-        if ( orderService.placeOrder(orders)){
-            new Alert(Alert.AlertType.INFORMATION , "Order Placed successfully ").show();
-            createWordInvoice(orderID, date, supplierId, supplierName, supplierContact, supplierEmail,supplierAddress, cartLists, netTotal);
+        if (orderService.placeOrder(orders)) {
+            new Alert(Alert.AlertType.INFORMATION, "Order Placed successfully").show();
+            createExcelInvoice(orderID, date, supplierId, supplierName, supplierContact, supplierEmail, supplierAddress, cartLists, netTotal);
             tblOrder.getItems().clear();
             lblNetTotal.setText("Rs.0000");
             nextIdGenerator();
-        }else{
-            new Alert(Alert.AlertType.ERROR,"Order could not be placed").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Order could not be placed").show();
         }
-
-
-
-
-
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -255,31 +192,26 @@ public class OderManageFormController  implements Initializable {
         nextIdGenerator();
         loadSuppliersIDs();
         loadItemIDs();
+        setupSupplierAutoComplete();
+        setupItemAutoComplete();
+    }
 
+    private void setupSupplierAutoComplete() {
         txtSupplierName.textProperty().addListener((obs, oldText, newText) -> {
-            if (newText != null && newText.length() >= 1) { // safe check
-                showSuggestions(newText);
-            } else {
-                suggestionsMenu.hide();
-            }
+            if (newText != null && newText.length() >= 1) showSuggestions(newText);
+            else suggestionsMenu.hide();
         });
+    }
 
-
+    private void setupItemAutoComplete() {
         txtItemName.textProperty().addListener((obs, oldText, newText) -> {
-            if (newText != null && newText.length() >= 1) {
-                showItemSuggestions(newText);
-            } else {
-                itemSuggestionsMenu.hide();
-            }
+            if (newText != null && newText.length() >= 1) showItemSuggestions(newText);
+            else itemSuggestionsMenu.hide();
         });
-
-
-
     }
 
     private void showItemSuggestions(String searchText) {
         List<Item> items = ItemController.getInstance().searchItemsByNamePattern(searchText);
-
         if (items.isEmpty()) {
             itemSuggestionsMenu.hide();
             return;
@@ -289,29 +221,21 @@ public class OderManageFormController  implements Initializable {
         for (Item item : items) {
             MenuItem menuItem = new MenuItem(item.getItemName());
             menuItem.setOnAction(e -> {
-                // Fill fields when user selects an item
                 txtItemName.setText(item.getItemName());
                 txtUnitePrice.setText(String.valueOf(item.getUnitPrice()));
                 txtItemUniteType.setText(item.getUnitType());
                 cmbItemId.setValue(item.getItemId());
-
                 itemSuggestionsMenu.hide();
             });
             menuItems.add(menuItem);
         }
-
         itemSuggestionsMenu.getItems().clear();
         itemSuggestionsMenu.getItems().addAll(menuItems);
-
-        if (!itemSuggestionsMenu.isShowing()) {
-            itemSuggestionsMenu.show(txtItemName, Side.BOTTOM, 0, 0);
-        }
+        if (!itemSuggestionsMenu.isShowing()) itemSuggestionsMenu.show(txtItemName, Side.BOTTOM, 0, 0);
     }
-
 
     private void showSuggestions(String searchText) {
         List<Supplier> suppliers = SupplierController.getInstance().searchSupplierByNamePattern(searchText);
-
         if (suppliers.isEmpty()) {
             suggestionsMenu.hide();
             return;
@@ -321,7 +245,6 @@ public class OderManageFormController  implements Initializable {
         for (Supplier supplier : suppliers) {
             MenuItem item = new MenuItem(supplier.getSupplierName());
             item.setOnAction(e -> {
-                // Fill fields when user clicks suggestion
                 txtSupplierName.setText(supplier.getSupplierName());
                 txtSupplierContactNo.setText(supplier.getContactNo());
                 txtSupplierAddress.setText(supplier.getSupplierAddress());
@@ -330,18 +253,10 @@ public class OderManageFormController  implements Initializable {
             });
             menuItems.add(item);
         }
-
         suggestionsMenu.getItems().clear();
         suggestionsMenu.getItems().addAll(menuItems);
-
-        if (!suggestionsMenu.isShowing()) {
-            suggestionsMenu.show(txtSupplierName, Side.BOTTOM, 0, 0);
-        }
+        if (!suggestionsMenu.isShowing()) suggestionsMenu.show(txtSupplierName, Side.BOTTOM, 0, 0);
     }
-
-
-
-
 
     private void loadItemIDs() {
         ObservableList<String> itemIds = ItemController.getInstance().getItemIds();
@@ -354,57 +269,32 @@ public class OderManageFormController  implements Initializable {
     }
 
     private void nextIdGenerator() {
-        String lastId = orderService.getNextOrderID(); // e.g., "PO01", "PO99", etc.
-
+        String lastId = orderService.getNextOrderID(); // e.g., "PO01"
         if (lastId != null && lastId.startsWith("PO")) {
             try {
-                // Extract numeric part after "PO"
                 String numericPart = lastId.substring(2);
-                int idNum = Integer.parseInt(numericPart);
-
-                // Increment number
-                int nextId = idNum + 1;
-
-                // Format with dynamic zero padding (minimum 2 digits, grows if needed)
-                String newId = String.format("PO%0" + Math.max(2, String.valueOf(nextId).length()) + "d", nextId);
-
-                lblOrderID.setText(newId);
-
+                int nextId = Integer.parseInt(numericPart) + 1;
+                lblOrderID.setText(String.format("PO%02d", nextId));
             } catch (NumberFormatException e) {
-                // If parsing fails, start fresh
                 lblOrderID.setText("PO01");
             }
         } else {
-            // If no ID is found, start from PO01
             lblOrderID.setText("PO01");
         }
     }
 
-
-
     private void loadDateAndTime() {
         Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateNow = simpleDateFormat.format(date);
-        lblDate.setText(dateNow);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        lblDate.setText(sdf.format(date));
 
-
-        Timeline timeline =  new Timeline(new KeyFrame(Duration.ZERO ,e ->{
+        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             LocalTime now = LocalTime.now();
-            lblTime.setText(now.getHour()+" : "+ now.getMinute()+" : "+ now.getSecond());
-        }),
-                new KeyFrame(Duration.seconds(1))
-                );
+            lblTime.setText(now.getHour() + " : " + now.getMinute() + " : " + now.getSecond());
+        }), new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-
     }
-
-
-
-
-
-
 
     private void clearItemFields() {
         txtItemName.setText(null);
@@ -412,13 +302,11 @@ public class OderManageFormController  implements Initializable {
         txtUnitePrice.setText(null);
         txtItemQuantity.setText(null);
         cmbItemId.setValue(null);
-
         cmbItemId.setEditable(true);
         cmbItemId.setPromptText("Select Item ID");
     }
 
-    private  void clearSupplierFields(){
-
+    private void clearSupplierFields() {
         cmbSupplierId.setValue(null);
         txtSupplierName.setText(null);
         txtSupplierContactNo.setText(null);
@@ -427,230 +315,224 @@ public class OderManageFormController  implements Initializable {
         cmbSupplierId.setPromptText("Select Supplier ID");
     }
 
-
-
-    // for a connect with word document
-    private void createWordInvoice(String orderId,
-                                   String date,
-                                   String supplierId,
-                                   String supplierName,
-                                   String contactNo,
-                                   String supplierEmail,
-                                   String supplierAddress,
-                                   List<CartList> items,
-                                   double netTotal) {
-
-        // ask the user where to save
+    private void createExcelInvoice(String orderId, String date, String supplierId, String supplierName,
+                                    String contactNo, String supplierEmail, String supplierAddress,
+                                    List<CartList> items, double netTotal) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Invoice");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Word Document", "*.docx"));
-        fileChooser.setInitialFileName(orderId + "_invoice.docx");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Workbook", "*.xlsx"));
+        fileChooser.setInitialFileName(orderId + "_invoice.xlsx");
 
-        // get stage from any control
         Stage stage = (Stage) lblOrderID.getScene().getWindow();
         File file = fileChooser.showSaveDialog(stage);
-        if (file == null) return; // user cancelled
+        if (file == null) return;
 
         DecimalFormat df = new DecimalFormat("0.00");
 
-        try (XWPFDocument doc = new XWPFDocument();
-             FileOutputStream out = new FileOutputStream(file)) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(); FileOutputStream out = new FileOutputStream(file)) {
+            XSSFSheet sheet = workbook.createSheet("Invoice");
+            int rowNum = 0;
 
-            // ===== Add Logo + Permanent Address =====
-            XWPFParagraph headerPara = doc.createParagraph();
-            headerPara.setAlignment(ParagraphAlignment.LEFT);
+            // ===== Company Name =====
+            Row companyRow = sheet.createRow(rowNum++);
+            Cell companyCell = companyRow.createCell(0);
+            companyCell.setCellValue("UNIQUE INDUSTRIAL SOLUTIONS (PVT) LTD");
+            CellStyle companyStyle = workbook.createCellStyle();
+            Font companyFont = workbook.createFont();
+            companyFont.setBold(true);
+            companyFont.setFontHeightInPoints((short) 18);
+            companyFont.setFontName("Century");
+            companyFont.setColor(IndexedColors.BLACK.getIndex());
+            companyStyle.setFont(companyFont);
+            companyStyle.setAlignment(HorizontalAlignment.CENTER);
+            companyCell.setCellStyle(companyStyle);
+            sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 4));
 
-            XWPFRun headerRun = headerPara.createRun();
-            try (FileInputStream logoStream = new FileInputStream("D:\\chathuranga project\\my-pos\\src\\main\\resources\\img\\logo.png")) {
-                headerRun.addPicture(logoStream,
-                        XWPFDocument.PICTURE_TYPE_PNG,
-                        "logo.png",
-                        Units.toEMU(160), // width
-                        Units.toEMU(80)  // height
-                );
-            }
-//            headerRun.addBreak();
-//            headerRun.setFontSize(10);
-//            headerRun.setFontFamily("Calibri");
-//            headerRun.setText("UNIQUE INDUSTRIAL SOLUTIONS (PVT) LTD");
-//            headerRun.addBreak();
-//            headerRun.setText("No. 123, Main Street, Colombo, Sri Lanka"); // permanent address
-//            headerRun.addBreak();
-//            headerRun.addBreak();
+            try {
+                InputStream logoInputStream = new FileInputStream("D:\\chathuranga project\\my-pos\\src\\main\\resources\\img\\logo.png"); // <-- replace with your logo path
+                byte[] bytes = logoInputStream.readAllBytes();
+                int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
+                logoInputStream.close();
 
-            // Company name paragraph
-            XWPFParagraph companyName = doc.createParagraph();
-            companyName.setAlignment(ParagraphAlignment.CENTER);
-            companyName.setSpacingAfter(20);
+                Drawing<?> drawing = sheet.createDrawingPatriarch();
+                CreationHelper helper = workbook.getCreationHelper();
 
-            XWPFRun rCompany = companyName.createRun();
-            rCompany.setBold(true);
-            rCompany.setFontSize(18);
-            rCompany.setFontFamily("Calibri");
-            rCompany.setColor("000000");  // black color
-            rCompany.setText("UNIQUE INDUSTRIAL SOLUTIONS (PVT) LTD");
-
-            // Title styling
-            XWPFParagraph title = doc.createParagraph();
-            title.setAlignment(ParagraphAlignment.CENTER);
-            title.setSpacingAfter(20); // space after title
-            XWPFRun rTitle = title.createRun();
-            rTitle.setBold(true);
-            rTitle.setFontSize(20);
-            rTitle.setFontFamily("Calibri");
-            rTitle.setColor("2E74B5");  // blue-ish color
-            rTitle.setText("Purchase Order");
-
-            // Right-aligned paragraph ONLY for Order ID and Date
-            XWPFParagraph orderDatePara = doc.createParagraph();
-            orderDatePara.setAlignment(ParagraphAlignment.RIGHT);
-            XWPFRun rOrderDate = orderDatePara.createRun();
-            rOrderDate.setFontSize(11);
-            rOrderDate.setFontFamily("Century");
-            rOrderDate.setText("Order ID: " + orderId);
-            rOrderDate.addBreak();
-            rOrderDate.setText("Date: " + date);
-            rOrderDate.addBreak();
-            rOrderDate.addBreak();
-
-
-            XWPFParagraph companyAddressPara = doc.createParagraph();
-            companyAddressPara.setAlignment(ParagraphAlignment.LEFT);
-            XWPFRun rCompanyAddress = companyAddressPara.createRun();
-            rCompanyAddress.setFontSize(12);
-            rCompanyAddress.setFontFamily("Century");
-            rCompanyAddress.setText("Unique Industrial Solutions (Pvt) Ltd");
-            rCompanyAddress.addBreak();
-            rCompanyAddress.setText("No:15, Uyanikele Road,");
-            rCompanyAddress.addBreak();
-            rCompanyAddress.setText("Panadura 12500");
-            rCompanyAddress.addBreak();
-            rCompanyAddress.setText("Phone: 076-8235111");
-            rCompanyAddress.addBreak();
-            rCompanyAddress.setText("E Mail: projects@uniquein.lk");
-            rCompanyAddress.addBreak();
-            rCompanyAddress.addBreak();
-
-            // ✅ Right-align the whole block
-
-            XWPFParagraph info = doc.createParagraph();
-            info.setAlignment(ParagraphAlignment.RIGHT);
-
-
-
-// ✅ Add "Ship To" heading
-            XWPFRun rTitles = info.createRun();
-
-            rTitles.setFontSize(14); // 🔹 Bigger size for title
-            rTitles.setFontFamily("Century");
-            rTitles.setBold(true);
-            rTitles.setText("Ship To");
-            rTitles.addBreak();
-            rTitles.addBreak();
-
-// Supplier info
-            XWPFRun r = info.createRun();
-            r.setFontSize(12);
-            r.setFontFamily("Century");
-
-            r.setBold(false); // back to normal text
-            r.setText("Supplier ID: " + supplierId); r.addBreak();
-            r.setText("Supplier Name: " + supplierName); r.addBreak();
-            r.setText("Contact No: " + contactNo); r.addBreak();
-            r.setText("Supplier Address: " + supplierAddress); r.addBreak();
-            r.setText("Email: " + supplierEmail); r.addBreak();
-            r.addBreak();
-
-
-            // Create items table
-            XWPFTable table = doc.createTable();
-
-            // Set table width to 100%
-            table.setWidth("100%");
-
-            // Header row (table initially has one row)
-            XWPFTableRow header = table.getRow(0);
-            header.getCell(0).setText("Item ID");
-            header.addNewTableCell().setText("Item Name");
-            header.addNewTableCell().setText("Quantity");
-            header.addNewTableCell().setText("Unit Price");
-            header.addNewTableCell().setText("Total");
-
-            // Style header cells: background color + white bold text
-            for (XWPFTableCell cell : header.getTableCells()) {
-                cell.setColor("4472C4");  // Dark blue background
-
-                for (XWPFParagraph p : cell.getParagraphs()) {
-                    for (XWPFRun run : p.getRuns()) {
-                        run.setBold(true);
-                        run.setColor("FFFFFF");  // White text
-                        run.setFontFamily("Calibri");
-                        run.setFontSize(12);
-                    }
-                }
+                ClientAnchor anchor = helper.createClientAnchor();
+                anchor.setCol1(0); // Column A
+                anchor.setRow1(companyRow.getRowNum()); // Current row
+                anchor.setCol2(1); // Column B (logo width)
+                anchor.setRow2(companyRow.getRowNum() + 1); // Row height
+                Picture pict = drawing.createPicture(anchor, pictureIdx);
+                pict.resize(0.5); // Resize to 50%
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Error adding logo: " + e.getMessage()).show();
             }
 
-            // Add data rows with alternating row shading
+
+            // ===== Title =====
+            Row titleRow = sheet.createRow(rowNum++);
+            Cell titleCell = titleRow.createCell(0);
+            titleCell.setCellValue("PURCHASE ORDER");
+            CellStyle titleStyle = workbook.createCellStyle();
+            Font titleFont = workbook.createFont();
+            titleFont.setBold(true);
+            titleFont.setFontHeightInPoints((short) 18);
+            titleFont.setFontName("Century");
+            titleFont.setColor(IndexedColors.GREEN.getIndex());
+            titleStyle.setFont(titleFont);
+            titleStyle.setAlignment(HorizontalAlignment.CENTER);
+            titleCell.setCellStyle(titleStyle);
+            sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 4));
+
+
+            // ===== Order ID & Date =====
+            Row orderIdRow = sheet.createRow(rowNum++);
+            Cell orderIdCell = orderIdRow.createCell(3);
+            orderIdCell.setCellValue("Order ID: " + orderId);
+
+            CellStyle orderStyle = workbook.createCellStyle();
+            Font orderFont = workbook.createFont();
+            orderFont.setFontName("Century");
+            orderFont.setFontHeightInPoints((short) 11);
+            orderStyle.setFont(orderFont);
+            orderStyle.setAlignment(HorizontalAlignment.RIGHT);
+            orderIdCell.setCellStyle(orderStyle);
+
+// ===== Date =====
+            Row dateRow = sheet.createRow(rowNum++);
+            Cell dateCell = dateRow.createCell(3);
+            dateCell.setCellValue("Date: " + date);
+
+            dateCell.setCellStyle(orderStyle); // reuse the same style
+
+            rowNum++;
+
+            // ===== Ship To =====
+            // Column index for right side (adjust as needed)
+            int rightColumn = 3;
+
+// ===== Ship To =====
+            Row shipRow = sheet.createRow(rowNum++);
+            Cell shipCell = shipRow.createCell(rightColumn);
+            shipCell.setCellValue("Ship To");
+
+            CellStyle shipStyle = workbook.createCellStyle();
+            Font shipFont = workbook.createFont();
+            shipFont.setBold(true);
+            shipFont.setFontHeightInPoints((short) 14);
+            shipFont.setFontName("Century");
+            shipStyle.setFont(shipFont);
+            shipStyle.setAlignment(HorizontalAlignment.RIGHT); // align text to the right
+            shipCell.setCellStyle(shipStyle);
+
+// ===== Supplier Info =====
+            String[] supplierInfo = {
+                    "Supplier ID: " + supplierId,
+                    "Supplier Name: " + supplierName,
+                    "Contact No: " + contactNo,
+                    "Supplier Address: " + supplierAddress,
+                    "Email: " + supplierEmail
+            };
+
+            for (String info : supplierInfo) {
+                Row r = sheet.createRow(rowNum++);
+                Cell c = r.createCell(rightColumn);
+                c.setCellValue(info);
+
+                CellStyle infoStyle = workbook.createCellStyle();
+                Font infoFont = workbook.createFont();
+                infoFont.setFontName("Century");
+                infoFont.setFontHeightInPoints((short) 12);
+                infoStyle.setFont(infoFont);
+                infoStyle.setAlignment(HorizontalAlignment.RIGHT); // right-align
+                c.setCellStyle(infoStyle);
+            }
+
+
+            rowNum++;
+
+            // ===== Items Table =====
+            String[] headers = {"Item ID", "Item Name", "Quantity", "Unit Price", "Total"};
+            Row headerRow = sheet.createRow(rowNum++);
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerFont.setColor(IndexedColors.WHITE.getIndex());
+            headerFont.setFontHeightInPoints((short) 12);
+            headerFont.setFontName("Calibri");
+            headerStyle.setFont(headerFont);
+            headerStyle.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
+            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            headerStyle.setAlignment(HorizontalAlignment.CENTER);
+
+            for (int i = 0; i < headers.length; i++) {
+                Cell c = headerRow.createCell(i);
+                c.setCellValue(headers[i]);
+                c.setCellStyle(headerStyle);
+            }
+
             boolean shade = false;
-            for (CartList it : items) {
-                XWPFTableRow row = table.createRow();
+            CellStyle shadeStyle = workbook.createCellStyle();
+            shadeStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+            shadeStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-                row.getCell(0).setText(it.getItemId() == null ? "" : it.getItemId());
-                row.getCell(1).setText(it.getItemName() == null ? "" : it.getItemName());
-                row.getCell(2).setText(String.valueOf(it.getQuantity()));
-                row.getCell(3).setText(df.format(it.getUnitPrice()));
-                row.getCell(4).setText(df.format(it.getTotal()));
+            for (CartList item : items) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(item.getItemId() == null ? "" : item.getItemId());
+                row.createCell(1).setCellValue(item.getItemName() == null ? "" : item.getItemName());
+                row.createCell(2).setCellValue(item.getQuantity());
+                row.createCell(3).setCellValue(df.format(item.getUnitPrice()));
+                row.createCell(4).setCellValue(df.format(item.getTotal()));
 
                 if (shade) {
-                    for (XWPFTableCell cell : row.getTableCells()) {
-                        cell.setColor("D9E1F2");  // Light blue shading
+                    for (int i = 0; i < 5; i++) {
+                        row.getCell(i).setCellStyle(shadeStyle);
                     }
                 }
                 shade = !shade;
             }
 
-            // Add table borders (solid lines)
-            CTTblBorders borders = table.getCTTbl().getTblPr().addNewTblBorders();
-            borders.addNewTop().setVal(STBorder.SINGLE);
-            borders.addNewBottom().setVal(STBorder.SINGLE);
-            borders.addNewLeft().setVal(STBorder.SINGLE);
-            borders.addNewRight().setVal(STBorder.SINGLE);
-            borders.addNewInsideH().setVal(STBorder.SINGLE);
-            borders.addNewInsideV().setVal(STBorder.SINGLE);
+            // ===== Net Total =====
+            Row totalRow = sheet.createRow(rowNum++);
+            Cell totalCell = totalRow.createCell(4);
+            totalCell.setCellValue("Net Total: Rs. " + df.format(netTotal));
+            CellStyle totalStyle = workbook.createCellStyle();
+            Font totalFont = workbook.createFont();
+            totalFont.setBold(true);
+            totalFont.setFontName("Calibri");
+            totalFont.setFontHeightInPoints((short) 14);
+            totalStyle.setFont(totalFont);
+            totalCell.setCellStyle(totalStyle);
 
-            // Net total paragraph (right aligned, bold)
-            XWPFParagraph totalPara = doc.createParagraph();
-            totalPara.setAlignment(ParagraphAlignment.RIGHT);
-            XWPFRun rTotal = totalPara.createRun();
-            rTotal.setBold(true);
-            rTotal.setFontFamily("Calibri");
-            rTotal.setFontSize(14);
-            rTotal.setText("Net Total: Rs. " + df.format(netTotal));
+            // Auto-size columns
+            for (int i = 0; i < 5; i++) sheet.autoSizeColumn(i);
 
-            // Write document to file
-            doc.write(out);
+            // ===== Set Custom Column Widths =====
+            sheet.setColumnWidth(0, 13000);
+            sheet.setColumnWidth(1, 10000);
+            sheet.setColumnWidth(2, 7000);
+            sheet.setColumnWidth(3, 7000);
+            sheet.setColumnWidth(4, 8000);
+
+
+
+            workbook.write(out);
 
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Could not save invoice: " + e.getMessage()).show();
+            new Alert(Alert.AlertType.ERROR, "Could not save Excel invoice: " + e.getMessage()).show();
             return;
         }
 
-        // Optionally open the file after creation (desktop must be supported)
+        // Open the generated file automatically
         try {
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().open(file);
-            }
-        } catch (Exception ex) {
-            // ignore if can't open — file is still saved.
+            if (Desktop.isDesktopSupported()) Desktop.getDesktop().open(file);
+        } catch (Exception ignored) {
         }
 
-        new Alert(Alert.AlertType.INFORMATION, "Invoice saved: " + file.getAbsolutePath()).show();
+        // ===== Success alert =====
+        new Alert(Alert.AlertType.INFORMATION, "Invoice saved successfully at:\n" + file.getAbsolutePath()).show();
     }
-
-
-
-
-
-
 }
+
