@@ -61,7 +61,7 @@ public class OrderController implements OrderService {
 
     @Override
     public boolean placeOrder(Orders orders) {
-        String SQL = "INSERT INTO orders VALUE(?,?,?,?,?,?,?)";
+        String SQL = "INSERT INTO orders VALUE(?,?,?,?,?,?,?,?)";
         try{
             return CrudUtil.execute(
                     SQL,
@@ -70,6 +70,7 @@ public class OrderController implements OrderService {
                     orders.getSupplierId(),
                     orders.getSupplierName(),
                     orders.getContactNo(),
+                    orders.getSupplierAddress(),
                     orders.getSupplierEmail(),
                     orders.getNetTotal()
             );
