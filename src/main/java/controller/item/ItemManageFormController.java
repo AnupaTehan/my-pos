@@ -385,7 +385,7 @@ public class ItemManageFormController implements Initializable {
             Sheet sheet = workbook.createSheet("Items");
 
             // === Insert PNG Logo with smaller size ===
-            InputStream logoInput = new FileInputStream("D:\\chathuranga_project\\src\\main\\resources\\img\\logo.png");
+            InputStream logoInput = new FileInputStream("src/main/resources/img/logo.png");
             byte[] logoBytes = IOUtils.toByteArray(logoInput);
             logoInput.close();
 
@@ -394,17 +394,17 @@ public class ItemManageFormController implements Initializable {
             Drawing<?> drawing = sheet.createDrawingPatriarch();
             ClientAnchor anchor = helper.createClientAnchor();
 
-            anchor.setCol1(0); // Start column
-            anchor.setRow1(0); // Start row
-            anchor.setCol2(2); // End column (smaller width)
-            anchor.setRow2(6); // End row (smaller height)
+            anchor.setCol1(1); // Start column
+            anchor.setRow1(1); // Start row
+            anchor.setCol2(3); // End column (smaller width)
+            anchor.setRow2(8); // End row (smaller height)
             anchor.setDx1(50); // Horizontal offset
             anchor.setDy1(100);  // Vertical offset
 
             Picture pict = drawing.createPicture(anchor, pictureIdx);
-            pict.resize(0.5); // Resize proportionally to fit smaller space
+            pict.resize(0.8); // Resize proportionally to fit smaller space
 
-            // === "ITEM LIST" Title with spacing below logo ===
+            // === "ITEM LIST" Title with perfect alignment ===
             CellStyle titleStyle = workbook.createCellStyle();
             Font titleFont = workbook.createFont();
             titleFont.setBold(true);
@@ -416,37 +416,83 @@ public class ItemManageFormController implements Initializable {
             titleStyle.setAlignment(HorizontalAlignment.CENTER);
             titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
-            // Merge cells for title next to logo
-            sheet.addMergedRegion(new CellRangeAddress(0, 2, 3, 8)); // Title starts at column 3
-            Row titleRow = sheet.createRow(0);
-            Cell titleCell = titleRow.createCell(3);
-            titleCell.setCellValue("ITEM LIST");
-            titleCell.setCellStyle(titleStyle);
+            // Add borders for better definition
+            titleStyle.setBorderBottom(BorderStyle.MEDIUM);
+            titleStyle.setBorderTop(BorderStyle.MEDIUM);
+            titleStyle.setBorderLeft(BorderStyle.MEDIUM);
+            titleStyle.setBorderRight(BorderStyle.MEDIUM);
+            titleStyle.setBottomBorderColor(IndexedColors.DARK_GREEN.getIndex());
+            titleStyle.setTopBorderColor(IndexedColors.DARK_GREEN.getIndex());
+            titleStyle.setLeftBorderColor(IndexedColors.DARK_GREEN.getIndex());
+            titleStyle.setRightBorderColor(IndexedColors.DARK_GREEN.getIndex());
 
-            // Add empty row for spacing between title and table
-            sheet.createRow(3);
+            // Merge cells for title next to logo with proper alignment
+            sheet.addMergedRegion(new CellRangeAddress(2, 4, 3, 8)); // Centered vertically with logo
 
-            // === Table Header Style ===
+            // Create title row and apply style to all merged cells
+            Row titleRow = sheet.getRow(3);
+            if (titleRow == null) titleRow = sheet.createRow(2);
+
+            for (int col = 3; col <= 3; col++) {
+                Cell titleCell = titleRow.createCell(col);
+                if (col == 3) {
+                    titleCell.setCellValue("ITEM LIST");
+                }
+                titleCell.setCellStyle(titleStyle);
+            }
+
+            // Ensure all rows in the merged region have the style applied
+            for (int row = 2; row <= 4; row++) {
+                Row currentRow = sheet.getRow(row);
+                if (currentRow == null) currentRow = sheet.createRow(row);
+                for (int col = 3; col <= 8; col++) {
+                    Cell cell = currentRow.getCell(col);
+                    if (cell == null) cell = currentRow.createCell(col);
+                    cell.setCellStyle(titleStyle);
+                }
+            }
+
+            // Add spacing rows
+            sheet.createRow(5); // Empty row
+            sheet.createRow(6); // Empty row
+
+            // === Perfect Table Header Style ===
             CellStyle headerStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
             headerFont.setBold(true);
+            headerFont.setFontHeightInPoints((short) 12);
             headerFont.setColor(IndexedColors.WHITE.getIndex());
             headerStyle.setFont(headerFont);
             headerStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
             headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            headerStyle.setBorderBottom(BorderStyle.THIN);
-            headerStyle.setBorderTop(BorderStyle.THIN);
-            headerStyle.setBorderLeft(BorderStyle.THIN);
-            headerStyle.setBorderRight(BorderStyle.THIN);
+
+            // Perfect border styling
+            headerStyle.setBorderBottom(BorderStyle.MEDIUM);
+            headerStyle.setBorderTop(BorderStyle.MEDIUM);
+            headerStyle.setBorderLeft(BorderStyle.MEDIUM);
+            headerStyle.setBorderRight(BorderStyle.MEDIUM);
+            headerStyle.setBottomBorderColor(IndexedColors.DARK_GREEN.getIndex());
+            headerStyle.setTopBorderColor(IndexedColors.DARK_GREEN.getIndex());
+            headerStyle.setLeftBorderColor(IndexedColors.DARK_GREEN.getIndex());
+            headerStyle.setRightBorderColor(IndexedColors.DARK_GREEN.getIndex());
+
+            // Perfect alignment
             headerStyle.setAlignment(HorizontalAlignment.CENTER);
+            headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
+            // Add text wrapping for better header display
+            headerStyle.setWrapText(true);
 
             String[] columns = {"Item ID", "Item Name", "Unit Type", "Unit Price", "Date"};
 
-            // Header row below spacing
-            int headerRowIndex = 4;
+            // Header row with perfect positioning
+            int headerRowIndex = 9;
+            int columnOffset = 1; // Start from column B (index 1) instead of A (index 0)
             Row headerRow = sheet.createRow(headerRowIndex);
+            headerRow.setHeightInPoints(29); // Set consistent header row height
+
             for (int i = 0; i < columns.length; i++) {
-                Cell cell = headerRow.createCell(i);
+                Cell cell = headerRow.createCell(i + columnOffset); // Add offset here
                 cell.setCellValue(columns[i]);
                 cell.setCellStyle(headerStyle);
             }
@@ -457,28 +503,37 @@ public class ItemManageFormController implements Initializable {
             bodyStyle.setBorderTop(BorderStyle.THIN);
             bodyStyle.setBorderLeft(BorderStyle.THIN);
             bodyStyle.setBorderRight(BorderStyle.THIN);
+            bodyStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+            bodyStyle.setWrapText(true);
 
             // Fill table data
             int rowNum = headerRowIndex + 1;
             for (Item item : items) {
                 Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(item.getItemId());
-                row.createCell(1).setCellValue(item.getItemName());
-                row.createCell(2).setCellValue(item.getUnitType());
-                row.createCell(3).setCellValue(item.getUnitPrice());
-                row.createCell(4).setCellValue(item.getDate());
+                row.setHeightInPoints(20); // Consistent row height
 
+                // Create cells with offset
+                row.createCell(0 + columnOffset).setCellValue(item.getItemId());
+                row.createCell(1 + columnOffset).setCellValue(item.getItemName());
+                row.createCell(2 + columnOffset).setCellValue(item.getUnitType());
+                row.createCell(3 + columnOffset).setCellValue(item.getUnitPrice());
+                row.createCell(4 + columnOffset).setCellValue(item.getDate());
+
+                // Apply styles with offset
                 for (int i = 0; i < columns.length; i++) {
-                    row.getCell(i).setCellStyle(bodyStyle);
+                    Cell cell = row.getCell(i + columnOffset);
+                    if (cell != null) {
+                        cell.setCellStyle(bodyStyle);
+                    }
                 }
             }
 
-            // === Set Column Widths ===
-            sheet.setColumnWidth(0, 13000);
-            sheet.setColumnWidth(1, 10000);
-            sheet.setColumnWidth(2, 7000);
-            sheet.setColumnWidth(3, 7000);
-            sheet.setColumnWidth(4, 8000);
+            // === Set Column Widths with offset ===
+            sheet.setColumnWidth(0 + columnOffset, 5000);  // Column B - Item ID
+            sheet.setColumnWidth(1 + columnOffset, 10000); // Column C - Item Name
+            sheet.setColumnWidth(2 + columnOffset, 7000);  // Column D - Unit Type
+            sheet.setColumnWidth(3 + columnOffset, 7000);  // Column E - Unit Price
+            sheet.setColumnWidth(4 + columnOffset, 8000);  // Column F - Date
 
             // Save file
             try (FileOutputStream fileOut = new FileOutputStream(file)) {

@@ -322,7 +322,6 @@ public class OderManageFormController implements Initializable {
         fileChooser.setTitle("Save Invoice");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Workbook", "*.xlsx"));
         fileChooser.setInitialFileName(orderId + "_invoice.xlsx");
-
         Stage stage = (Stage) lblOrderID.getScene().getWindow();
         File file = fileChooser.showSaveDialog(stage);
         if (file == null) return;
@@ -330,192 +329,330 @@ public class OderManageFormController implements Initializable {
         DecimalFormat df = new DecimalFormat("0.00");
 
         try (XSSFWorkbook workbook = new XSSFWorkbook(); FileOutputStream out = new FileOutputStream(file)) {
-            XSSFSheet sheet = workbook.createSheet("Invoice");
+            XSSFSheet sheet = workbook.createSheet("Purchase Order");
             int rowNum = 0;
 
-            // ===== Company Name =====
-            Row companyRow = sheet.createRow(rowNum++);
-            Cell companyCell = companyRow.createCell(0);
-            companyCell.setCellValue("UNIQUE INDUSTRIAL SOLUTIONS (PVT) LTD");
-            CellStyle companyStyle = workbook.createCellStyle();
-            Font companyFont = workbook.createFont();
-            companyFont.setBold(true);
-            companyFont.setFontHeightInPoints((short) 18);
-            companyFont.setFontName("Century");
-            companyFont.setColor(IndexedColors.BLACK.getIndex());
-            companyStyle.setFont(companyFont);
-            companyStyle.setAlignment(HorizontalAlignment.CENTER);
-            companyCell.setCellStyle(companyStyle);
-            sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 4));
-
+            // ===== COMPANY LOGO AND INFO (TOP LEFT) =====
+            // Logo placement
             try {
-                InputStream logoInputStream = new FileInputStream("D:\\chathuranga project\\my-pos\\src\\main\\resources\\img\\logo.png"); // <-- replace with your logo path
+                InputStream logoInputStream = new FileInputStream("src/main/resources/img/logo.png");
                 byte[] bytes = logoInputStream.readAllBytes();
                 int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
                 logoInputStream.close();
 
                 Drawing<?> drawing = sheet.createDrawingPatriarch();
                 CreationHelper helper = workbook.getCreationHelper();
-
                 ClientAnchor anchor = helper.createClientAnchor();
                 anchor.setCol1(0); // Column A
-                anchor.setRow1(companyRow.getRowNum()); // Current row
-                anchor.setCol2(1); // Column B (logo width)
-                anchor.setRow2(companyRow.getRowNum() + 1); // Row height
+                anchor.setRow1(0); // Row 1
+                anchor.setCol2(2); // Column C
+                anchor.setRow2(4); // Row 5
                 Picture pict = drawing.createPicture(anchor, pictureIdx);
-                pict.resize(0.5); // Resize to 50%
+                pict.resize(1.0);
             } catch (Exception e) {
                 e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Error adding logo: " + e.getMessage()).show();
             }
 
+            // Company details (left side, starting from row 5)
+            rowNum = 4; // Start after logo space
 
-            // ===== Title =====
-            Row titleRow = sheet.createRow(rowNum++);
-            Cell titleCell = titleRow.createCell(0);
-            titleCell.setCellValue("PURCHASE ORDER");
-            CellStyle titleStyle = workbook.createCellStyle();
-            Font titleFont = workbook.createFont();
-            titleFont.setBold(true);
-            titleFont.setFontHeightInPoints((short) 18);
-            titleFont.setFontName("Century");
-            titleFont.setColor(IndexedColors.GREEN.getIndex());
-            titleStyle.setFont(titleFont);
-            titleStyle.setAlignment(HorizontalAlignment.CENTER);
-            titleCell.setCellStyle(titleStyle);
-            sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 4));
+            Row companyNameRow = sheet.createRow(rowNum++);
+            Cell companyNameCell = companyNameRow.createCell(0);
+            companyNameCell.setCellValue("Unique Industrial Solutions(Pvt)Ltd");
+            CellStyle companyStyle = workbook.createCellStyle();
+            Font companyFont = workbook.createFont();
+            companyFont.setBold(true);
+            companyFont.setFontHeightInPoints((short) 12);
+            companyFont.setColor(IndexedColors.TEAL.getIndex());
+            companyStyle.setFont(companyFont);
+            companyNameCell.setCellStyle(companyStyle);
 
-
-            // ===== Order ID & Date =====
-            Row orderIdRow = sheet.createRow(rowNum++);
-            Cell orderIdCell = orderIdRow.createCell(3);
-            orderIdCell.setCellValue("Order ID: " + orderId);
-
-            CellStyle orderStyle = workbook.createCellStyle();
-            Font orderFont = workbook.createFont();
-            orderFont.setFontName("Century");
-            orderFont.setFontHeightInPoints((short) 11);
-            orderStyle.setFont(orderFont);
-            orderStyle.setAlignment(HorizontalAlignment.RIGHT);
-            orderIdCell.setCellStyle(orderStyle);
-
-// ===== Date =====
-            Row dateRow = sheet.createRow(rowNum++);
-            Cell dateCell = dateRow.createCell(3);
-            dateCell.setCellValue("Date: " + date);
-
-            dateCell.setCellStyle(orderStyle); // reuse the same style
-
-            rowNum++;
-
-            // ===== Ship To =====
-            // Column index for right side (adjust as needed)
-            int rightColumn = 3;
-
-// ===== Ship To =====
-            Row shipRow = sheet.createRow(rowNum++);
-            Cell shipCell = shipRow.createCell(rightColumn);
-            shipCell.setCellValue("Ship To");
-
-            CellStyle shipStyle = workbook.createCellStyle();
-            Font shipFont = workbook.createFont();
-            shipFont.setBold(true);
-            shipFont.setFontHeightInPoints((short) 14);
-            shipFont.setFontName("Century");
-            shipStyle.setFont(shipFont);
-            shipStyle.setAlignment(HorizontalAlignment.RIGHT); // align text to the right
-            shipCell.setCellStyle(shipStyle);
-
-// ===== Supplier Info =====
-            String[] supplierInfo = {
-                    "Supplier ID: " + supplierId,
-                    "Supplier Name: " + supplierName,
-                    "Contact No: " + contactNo,
-                    "Supplier Address: " + supplierAddress,
-                    "Email: " + supplierEmail
+            // Default company information
+            String[] companyInfo = {
+                    "No.15, Uyankele Road,",
+                    "Panadura 12500",
+                    "Phone: 076-8235111",
+                    "E Mail: projects@uniquem.lk",
+                    "VAT Reg No.100987845-7000",
+                    "SVAT No.10798"
             };
 
-            for (String info : supplierInfo) {
-                Row r = sheet.createRow(rowNum++);
-                Cell c = r.createCell(rightColumn);
-                c.setCellValue(info);
+            CellStyle infoStyle = workbook.createCellStyle();
+            Font infoFont = workbook.createFont();
+            infoFont.setFontHeightInPoints((short) 10);
+            infoStyle.setFont(infoFont);
 
-                CellStyle infoStyle = workbook.createCellStyle();
-                Font infoFont = workbook.createFont();
-                infoFont.setFontName("Century");
-                infoFont.setFontHeightInPoints((short) 12);
-                infoStyle.setFont(infoFont);
-                infoStyle.setAlignment(HorizontalAlignment.RIGHT); // right-align
+            for (String info : companyInfo) {
+                Row r = sheet.createRow(rowNum++);
+                Cell c = r.createCell(0);
+                c.setCellValue(info);
                 c.setCellStyle(infoStyle);
             }
 
+            // ===== PURCHASE ORDER TITLE AND DETAILS (TOP RIGHT) =====
+            // Purchase Order title
+            Row poTitleRow = sheet.getRow(4) != null ? sheet.getRow(4) : sheet.createRow(4);
+            Cell poTitleCell = poTitleRow.createCell(4);
+            poTitleCell.setCellValue("PURCHASE ORDER");
+            CellStyle poTitleStyle = workbook.createCellStyle();
+            Font poTitleFont = workbook.createFont();
+            poTitleFont.setBold(true);
+            poTitleFont.setFontHeightInPoints((short) 18);
+            poTitleFont.setColor(IndexedColors.TEAL.getIndex());
+            poTitleStyle.setFont(poTitleFont);
+            poTitleStyle.setAlignment(HorizontalAlignment.RIGHT);
+            poTitleCell.setCellStyle(poTitleStyle);
 
-            rowNum++;
+            // Date and PO# (right aligned)
+            Row dateRowRight = sheet.getRow(6) != null ? sheet.getRow(6) : sheet.createRow(6);
+            Cell dateCellRight = dateRowRight.createCell(4);
+            dateCellRight.setCellValue("DATE");
+            Cell dateValueCell = dateRowRight.createCell(5);
+            dateValueCell.setCellValue(date);
 
-            // ===== Items Table =====
-            String[] headers = {"Item ID", "Item Name", "Quantity", "Unit Price", "Total"};
+            Row poRowRight = sheet.getRow(7) != null ? sheet.getRow(7) : sheet.createRow(7);
+            Cell poCellRight = poRowRight.createCell(4);
+            poCellRight.setCellValue("PO #");
+            Cell poValueCell = poRowRight.createCell(5);
+            poValueCell.setCellValue(orderId);
+
+            CellStyle rightAlignStyle = workbook.createCellStyle();
+            Font rightFont = workbook.createFont();
+            rightFont.setFontHeightInPoints((short) 10);
+            rightAlignStyle.setFont(rightFont);
+            rightAlignStyle.setAlignment(HorizontalAlignment.RIGHT);
+
+            dateCellRight.setCellStyle(rightAlignStyle);
+            poCellRight.setCellStyle(rightAlignStyle);
+
+            // ===== VENDOR AND SHIP TO SECTION =====
+            rowNum = Math.max(rowNum, 12); // Ensure enough space
+
+            // Create vendor and ship-to headers with green background
+            Row vendorHeaderRow = sheet.createRow(rowNum++);
+            Cell vendorHeaderCell = vendorHeaderRow.createCell(0);
+            vendorHeaderCell.setCellValue("VENDOR");
+            Cell shipToHeaderCell = vendorHeaderRow.createCell(3);
+            shipToHeaderCell.setCellValue("SHIP TO");
+
+            CellStyle greenHeaderStyle = workbook.createCellStyle();
+            Font greenHeaderFont = workbook.createFont();
+            greenHeaderFont.setBold(true);
+            greenHeaderFont.setColor(IndexedColors.WHITE.getIndex());
+            greenHeaderFont.setFontHeightInPoints((short) 11);
+            greenHeaderStyle.setFont(greenHeaderFont);
+            greenHeaderStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+            greenHeaderStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            greenHeaderStyle.setBorderTop(BorderStyle.THIN);
+            greenHeaderStyle.setBorderBottom(BorderStyle.THIN);
+            greenHeaderStyle.setBorderLeft(BorderStyle.THIN);
+            greenHeaderStyle.setBorderRight(BorderStyle.THIN);
+
+            vendorHeaderCell.setCellStyle(greenHeaderStyle);
+            shipToHeaderCell.setCellStyle(greenHeaderStyle);
+
+            // Merge cells for headers
+            sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 2));
+            sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 3, 5));
+
+            // Vendor details (left side)
+            String[] vendorDetails = {
+                    supplierName,
+                    "[Contact or Department]",
+                    supplierAddress,
+                    "Phone: " + contactNo,
+                    "Email: " + supplierEmail
+            };
+
+            // Ship To details (right side - using default company info)
+            String[] shipToDetails = {
+                    "No.15, Uyankele Road,",
+                    "Panadura 12500",
+                    "Phone: 076-8235111",
+                    "E Mail: projects@uniquem.lk"
+            };
+
+            CellStyle vendorStyle = workbook.createCellStyle();
+            Font vendorFont = workbook.createFont();
+            vendorFont.setFontHeightInPoints((short) 10);
+            vendorStyle.setFont(vendorFont);
+            vendorStyle.setBorderLeft(BorderStyle.THIN);
+            vendorStyle.setBorderRight(BorderStyle.THIN);
+
+            for (int i = 0; i < Math.max(vendorDetails.length, shipToDetails.length); i++) {
+                Row detailRow = sheet.createRow(rowNum++);
+
+                // Vendor side
+                if (i < vendorDetails.length) {
+                    Cell vendorCell = detailRow.createCell(0);
+                    vendorCell.setCellValue(vendorDetails[i]);
+                    vendorCell.setCellStyle(vendorStyle);
+                    sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 2));
+                }
+
+                // Ship To side
+                if (i < shipToDetails.length) {
+                    Cell shipCell = detailRow.createCell(3);
+                    shipCell.setCellValue(shipToDetails[i]);
+                    shipCell.setCellStyle(vendorStyle);
+                    sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 3, 5));
+                }
+            }
+
+            // Add bottom border to vendor section
+            Row bottomBorderRow = sheet.createRow(rowNum++);
+            for (int i = 0; i <= 5; i++) {
+                Cell borderCell = bottomBorderRow.createCell(i);
+                CellStyle bottomBorderStyle = workbook.createCellStyle();
+                bottomBorderStyle.setBorderBottom(BorderStyle.THIN);
+                borderCell.setCellStyle(bottomBorderStyle);
+            }
+
+            rowNum++; // Add some space
+
+            // ===== ITEMS TABLE =====
+            String[] headers = {"ITEM #", "DESCRIPTION", "QTY", "UNIT PRICE", "TOTAL"};
             Row headerRow = sheet.createRow(rowNum++);
-            CellStyle headerStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
-            headerFont.setBold(true);
-            headerFont.setColor(IndexedColors.WHITE.getIndex());
-            headerFont.setFontHeightInPoints((short) 12);
-            headerFont.setFontName("Calibri");
-            headerStyle.setFont(headerFont);
-            headerStyle.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
-            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            headerStyle.setAlignment(HorizontalAlignment.CENTER);
+
+            CellStyle tableHeaderStyle = workbook.createCellStyle();
+            Font tableHeaderFont = workbook.createFont();
+            tableHeaderFont.setBold(true);
+            tableHeaderFont.setColor(IndexedColors.WHITE.getIndex());
+            tableHeaderFont.setFontHeightInPoints((short) 11);
+            tableHeaderStyle.setFont(tableHeaderFont);
+            tableHeaderStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+            tableHeaderStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            tableHeaderStyle.setAlignment(HorizontalAlignment.CENTER);
+            tableHeaderStyle.setBorderTop(BorderStyle.THIN);
+            tableHeaderStyle.setBorderBottom(BorderStyle.THIN);
+            tableHeaderStyle.setBorderLeft(BorderStyle.THIN);
+            tableHeaderStyle.setBorderRight(BorderStyle.THIN);
 
             for (int i = 0; i < headers.length; i++) {
-                Cell c = headerRow.createCell(i);
-                c.setCellValue(headers[i]);
-                c.setCellStyle(headerStyle);
+                Cell headerCell = headerRow.createCell(i);
+                headerCell.setCellValue(headers[i]);
+                headerCell.setCellStyle(tableHeaderStyle);
             }
 
-            boolean shade = false;
-            CellStyle shadeStyle = workbook.createCellStyle();
-            shadeStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-            shadeStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            // Item rows with alternating colors
+            CellStyle normalRowStyle = workbook.createCellStyle();
+            normalRowStyle.setBorderTop(BorderStyle.THIN);
+            normalRowStyle.setBorderBottom(BorderStyle.THIN);
+            normalRowStyle.setBorderLeft(BorderStyle.THIN);
+            normalRowStyle.setBorderRight(BorderStyle.THIN);
 
+            CellStyle alternateRowStyle = workbook.createCellStyle();
+            alternateRowStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+            alternateRowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            alternateRowStyle.setBorderTop(BorderStyle.THIN);
+            alternateRowStyle.setBorderBottom(BorderStyle.THIN);
+            alternateRowStyle.setBorderLeft(BorderStyle.THIN);
+            alternateRowStyle.setBorderRight(BorderStyle.THIN);
+
+            boolean alternate = false;
             for (CartList item : items) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(item.getItemId() == null ? "" : item.getItemId());
-                row.createCell(1).setCellValue(item.getItemName() == null ? "" : item.getItemName());
-                row.createCell(2).setCellValue(item.getQuantity());
-                row.createCell(3).setCellValue(df.format(item.getUnitPrice()));
-                row.createCell(4).setCellValue(df.format(item.getTotal()));
+                Row itemRow = sheet.createRow(rowNum++);
+                CellStyle rowStyle = alternate ? alternateRowStyle : normalRowStyle;
 
-                if (shade) {
-                    for (int i = 0; i < 5; i++) {
-                        row.getCell(i).setCellStyle(shadeStyle);
-                    }
-                }
-                shade = !shade;
+                Cell itemIdCell = itemRow.createCell(0);
+                itemIdCell.setCellValue(item.getItemId() == null ? "" : item.getItemId());
+                itemIdCell.setCellStyle(rowStyle);
+
+                Cell itemNameCell = itemRow.createCell(1);
+                itemNameCell.setCellValue(item.getItemName() == null ? "" : item.getItemName());
+                itemNameCell.setCellStyle(rowStyle);
+
+                Cell qtyCell = itemRow.createCell(2);
+                qtyCell.setCellValue(item.getQuantity());
+                qtyCell.setCellStyle(rowStyle);
+
+                Cell unitPriceCell = itemRow.createCell(3);
+                unitPriceCell.setCellValue(Double.parseDouble(df.format(item.getUnitPrice())));
+                unitPriceCell.setCellStyle(rowStyle);
+
+                Cell totalCell = itemRow.createCell(4);
+                totalCell.setCellValue(Double.parseDouble(df.format(item.getTotal())));
+                totalCell.setCellStyle(rowStyle);
+
+                alternate = !alternate;
             }
 
-            // ===== Net Total =====
-            Row totalRow = sheet.createRow(rowNum++);
-            Cell totalCell = totalRow.createCell(4);
-            totalCell.setCellValue("Net Total: Rs. " + df.format(netTotal));
-            CellStyle totalStyle = workbook.createCellStyle();
+            // Add empty rows for spacing (like in template)
+            for (int i = 0; i < 5; i++) {
+                Row emptyRow = sheet.createRow(rowNum++);
+                for (int j = 0; j < 5; j++) {
+                    Cell emptyCell = emptyRow.createCell(j);
+                    emptyCell.setCellValue("-");
+                    emptyCell.setCellStyle(normalRowStyle);
+                }
+            }
+
+            rowNum++; // Space before totals
+
+            // ===== TOTALS SECTION =====
+            // Subtotal
+            Row subtotalRow = sheet.createRow(rowNum++);
+            Cell subtotalLabelCell = subtotalRow.createCell(3);
+            subtotalLabelCell.setCellValue("SUBTOTAL");
+            Cell subtotalValueCell = subtotalRow.createCell(4);
+            subtotalValueCell.setCellValue(Double.parseDouble(df.format(netTotal)));
+
+            // Tax, Shipping, Other (set to dash/zero as per template)
+            String[] totalLabels = {"TAX", "SHIPPING", "OTHER"};
+            for (String label : totalLabels) {
+                Row totalRow = sheet.createRow(rowNum++);
+                Cell labelCell = totalRow.createCell(3);
+                labelCell.setCellValue(label);
+                Cell valueCell = totalRow.createCell(4);
+                valueCell.setCellValue("-");
+            }
+
+            // Final Total with yellow background
+            Row finalTotalRow = sheet.createRow(rowNum++);
+            Cell totalLabelCell = finalTotalRow.createCell(3);
+            totalLabelCell.setCellValue("TOTAL");
+            Cell totalValueCell = finalTotalRow.createCell(4);
+            totalValueCell.setCellValue("Rs. " + df.format(netTotal));
+
+            CellStyle yellowTotalStyle = workbook.createCellStyle();
             Font totalFont = workbook.createFont();
             totalFont.setBold(true);
-            totalFont.setFontName("Calibri");
-            totalFont.setFontHeightInPoints((short) 14);
-            totalStyle.setFont(totalFont);
-            totalCell.setCellStyle(totalStyle);
+            totalFont.setFontHeightInPoints((short) 12);
+            yellowTotalStyle.setFont(totalFont);
+            yellowTotalStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+            yellowTotalStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            yellowTotalStyle.setBorderTop(BorderStyle.THICK);
+            yellowTotalStyle.setBorderBottom(BorderStyle.THICK);
+            yellowTotalStyle.setBorderLeft(BorderStyle.THICK);
+            yellowTotalStyle.setBorderRight(BorderStyle.THICK);
 
-            // Auto-size columns
-            for (int i = 0; i < 5; i++) sheet.autoSizeColumn(i);
+            totalLabelCell.setCellStyle(yellowTotalStyle);
+            totalValueCell.setCellStyle(yellowTotalStyle);
 
-            // ===== Set Custom Column Widths =====
-            sheet.setColumnWidth(0, 13000);
-            sheet.setColumnWidth(1, 10000);
-            sheet.setColumnWidth(2, 7000);
-            sheet.setColumnWidth(3, 7000);
-            sheet.setColumnWidth(4, 8000);
+            // ===== Comments Section =====
+            rowNum++;
+            Row commentsHeaderRow = sheet.createRow(rowNum++);
+            Cell commentsHeaderCell = commentsHeaderRow.createCell(0);
+            commentsHeaderCell.setCellValue("Comments or Special Instructions");
+            commentsHeaderCell.setCellStyle(greenHeaderStyle);
+            sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 2));
 
+            // Add a few empty rows for comments
+            for (int i = 0; i < 3; i++) {
+                Row commentRow = sheet.createRow(rowNum++);
+                Cell commentCell = commentRow.createCell(0);
+                commentCell.setCellValue("");
+                commentCell.setCellStyle(normalRowStyle);
+                sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 2));
+            }
 
+            // ===== Set Column Widths =====
+            sheet.setColumnWidth(0, 3000);  // Item #
+            sheet.setColumnWidth(1, 8000);  // Description
+            sheet.setColumnWidth(2, 2500);  // QTY
+            sheet.setColumnWidth(3, 3000);  // Unit Price
+            sheet.setColumnWidth(4, 3000);  // Total
+            sheet.setColumnWidth(5, 3000);  // Extra space
 
             workbook.write(out);
 
@@ -531,8 +668,8 @@ public class OderManageFormController implements Initializable {
         } catch (Exception ignored) {
         }
 
-        // ===== Success alert =====
-        new Alert(Alert.AlertType.INFORMATION, "Invoice saved successfully at:\n" + file.getAbsolutePath()).show();
+        // Success alert
+        new Alert(Alert.AlertType.INFORMATION, "Purchase Order saved successfully at:\n" + file.getAbsolutePath()).show();
     }
 }
 
