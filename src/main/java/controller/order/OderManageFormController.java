@@ -21,6 +21,7 @@ import model.Item;
 import model.Orders;
 import model.Supplier;
 
+import java.io.FileInputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -35,6 +36,7 @@ import java.util.ResourceBundle;
 // === imports you need ===
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblBorders;
@@ -428,7 +430,6 @@ public class OderManageFormController  implements Initializable {
 
 
     // for a connect with word document
-
     private void createWordInvoice(String orderId,
                                    String date,
                                    String supplierId,
@@ -455,6 +456,28 @@ public class OderManageFormController  implements Initializable {
         try (XWPFDocument doc = new XWPFDocument();
              FileOutputStream out = new FileOutputStream(file)) {
 
+            // ===== Add Logo + Permanent Address =====
+            XWPFParagraph headerPara = doc.createParagraph();
+            headerPara.setAlignment(ParagraphAlignment.LEFT);
+
+            XWPFRun headerRun = headerPara.createRun();
+            try (FileInputStream logoStream = new FileInputStream("D:\\chathuranga project\\my-pos\\src\\main\\resources\\img\\logo.png")) {
+                headerRun.addPicture(logoStream,
+                        XWPFDocument.PICTURE_TYPE_PNG,
+                        "logo.png",
+                        Units.toEMU(160), // width
+                        Units.toEMU(80)  // height
+                );
+            }
+//            headerRun.addBreak();
+//            headerRun.setFontSize(10);
+//            headerRun.setFontFamily("Calibri");
+//            headerRun.setText("UNIQUE INDUSTRIAL SOLUTIONS (PVT) LTD");
+//            headerRun.addBreak();
+//            headerRun.setText("No. 123, Main Street, Colombo, Sri Lanka"); // permanent address
+//            headerRun.addBreak();
+//            headerRun.addBreak();
+
             // Company name paragraph
             XWPFParagraph companyName = doc.createParagraph();
             companyName.setAlignment(ParagraphAlignment.CENTER);
@@ -462,7 +485,7 @@ public class OderManageFormController  implements Initializable {
 
             XWPFRun rCompany = companyName.createRun();
             rCompany.setBold(true);
-            rCompany.setFontSize(14);
+            rCompany.setFontSize(18);
             rCompany.setFontFamily("Calibri");
             rCompany.setColor("000000");  // black color
             rCompany.setText("UNIQUE INDUSTRIAL SOLUTIONS (PVT) LTD");
@@ -483,24 +506,61 @@ public class OderManageFormController  implements Initializable {
             orderDatePara.setAlignment(ParagraphAlignment.RIGHT);
             XWPFRun rOrderDate = orderDatePara.createRun();
             rOrderDate.setFontSize(11);
-            rOrderDate.setFontFamily("Calibri");
+            rOrderDate.setFontFamily("Century");
             rOrderDate.setText("Order ID: " + orderId);
             rOrderDate.addBreak();
             rOrderDate.setText("Date: " + date);
             rOrderDate.addBreak();
             rOrderDate.addBreak();
 
-            // Left-aligned paragraph for supplier info (unchanged)
+
+            XWPFParagraph companyAddressPara = doc.createParagraph();
+            companyAddressPara.setAlignment(ParagraphAlignment.LEFT);
+            XWPFRun rCompanyAddress = companyAddressPara.createRun();
+            rCompanyAddress.setFontSize(12);
+            rCompanyAddress.setFontFamily("Century");
+            rCompanyAddress.setText("Unique Industrial Solutions (Pvt) Ltd");
+            rCompanyAddress.addBreak();
+            rCompanyAddress.setText("No:15, Uyanikele Road,");
+            rCompanyAddress.addBreak();
+            rCompanyAddress.setText("Panadura 12500");
+            rCompanyAddress.addBreak();
+            rCompanyAddress.setText("Phone: 076-8235111");
+            rCompanyAddress.addBreak();
+            rCompanyAddress.setText("E Mail: projects@uniquein.lk");
+            rCompanyAddress.addBreak();
+            rCompanyAddress.addBreak();
+
+            // ✅ Right-align the whole block
+
             XWPFParagraph info = doc.createParagraph();
+            info.setAlignment(ParagraphAlignment.RIGHT);
+
+
+
+// ✅ Add "Ship To" heading
+            XWPFRun rTitles = info.createRun();
+
+            rTitles.setFontSize(14); // 🔹 Bigger size for title
+            rTitles.setFontFamily("Century");
+            rTitles.setBold(true);
+            rTitles.setText("Ship To");
+            rTitles.addBreak();
+            rTitles.addBreak();
+
+// Supplier info
             XWPFRun r = info.createRun();
-            r.setFontSize(11);
-            r.setFontFamily("Calibri");
+            r.setFontSize(12);
+            r.setFontFamily("Century");
+
+            r.setBold(false); // back to normal text
             r.setText("Supplier ID: " + supplierId); r.addBreak();
             r.setText("Supplier Name: " + supplierName); r.addBreak();
             r.setText("Contact No: " + contactNo); r.addBreak();
             r.setText("Supplier Address: " + supplierAddress); r.addBreak();
             r.setText("Email: " + supplierEmail); r.addBreak();
             r.addBreak();
+
 
             // Create items table
             XWPFTable table = doc.createTable();
